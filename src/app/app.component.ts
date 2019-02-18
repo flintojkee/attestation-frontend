@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.appService.testRoute().subscribe(data =>{
       this.msg = data['msg']
-      console.log(data);
     });
   }
 
