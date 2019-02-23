@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <span [routerLink]="['']">Атестація</span>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-remaining-space"></span>
+
+  <button mat-button
+          [routerLink]="['account/login']"
+          *ngIf="!loggedIn">Вхід</button>
+  <button mat-button
+          [routerLink]="['']"
+          *ngIf="loggedIn"
+          (click)="logout()" >Вихід</button>
+</mat-toolbar>
