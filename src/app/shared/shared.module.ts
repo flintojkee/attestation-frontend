@@ -10,13 +10,14 @@ import { MatButtonModule,
          MatIconModule,
          MatProgressSpinnerModule
 } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
   ],
   exports: [
     FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
