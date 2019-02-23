@@ -23,8 +23,8 @@ export class AuthService {
     // jlocalStorage.setItem("expires_at", JSON.stringify();
   }
   logout() {
-    localStorage.removeItem("id_token");
-    localStorage.removeItem("expires_at");
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
   }
 
   public isLoggedIn() {
