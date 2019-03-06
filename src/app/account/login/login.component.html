@@ -4,7 +4,7 @@
       <mat-card-title>Вхід</mat-card-title>
     </mat-card-header>
     <div class="login__content fw">
-      <form class="login__form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form class="login__form" [formGroup]="loginForm">
         <div class="login__form-field">
           <mat-form-field>
             <input matInput placeholder="Логін" formControlName="login" name="login" required>
