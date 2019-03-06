@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -10,32 +11,52 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder,
-              private authService: AuthService,
-              private router: Router) {
-                this.loginForm = this.fb.group({
-                  email: ['', Validators.required],
-                  password: ['', Validators.required]
-                });
-}
-
   loginForm: FormGroup;
+  loading = false;
+  submitted = false;
+  returnUrl: string;
+  error = '';
+
+  constructor(
+      private formBuilder: FormBuilder,
+      private route: ActivatedRoute,
+      private router: Router,
+      private authService: AuthService
+  ) { }
 
   ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+        login: ['', Validators.required],
+        password: ['', Validators.required]
+    });
+
+    // reset login status
+    this.authService.logout();
+
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  get f() { return this.loginForm.controls; }
+
   login() {
-    const val = this.loginForm.value;
+    this.submitted = true;
 
-    if (val.email && val.password) {
-        this.authService.login(val.email, val.password)
-            .subscribe(
-                () => {
-                    console.log('User is logged in');
-                    this.router.navigateByUrl('/');
-                }
-            );
+    // stop here if form is invalid
+    if (this.loginForm.invalid) {
+        return;
     }
-}
 
+    this.loading = true;
+    this.authService.login(this.f.login.value, this.f.password.value)
+        .pipe(first())
+        .subscribe(
+            data => {
+                this.router.navigate([this.returnUrl]);
+            },
+            error => {
+                this.error = error;
+                this.loading = false;
+            });
+  }
 }

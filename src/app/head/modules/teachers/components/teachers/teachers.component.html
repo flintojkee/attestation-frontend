@@ -1,0 +1,19 @@
+<div class="teachers">
+  <mat-spinner class="spinner" *ngIf="isLoaded"></mat-spinner>
+<mat-list  *ngIf="!isLoaded" class="teachers__list">
+  <mat-list-item class="teachers__teacher" *ngFor="let teacher of teachers">
+    <img matListAvatar src="assets/images/teacher-photo.png">
+    <h3 matLine> {{teacher.surname}}</h3>
+    <p matLine>
+    </p>
+    <button mat-mini-fab>
+      <mat-icon>edit</mat-icon>
+    </button>
+  </mat-list-item>
+    <mat-list-item>
+        <button class="teachers__add-teacher-button" color="primary" mat-mini-fab>
+          <mat-icon>add</mat-icon>
+        </button>
+    </mat-list-item>
+ </mat-list>
+</div>

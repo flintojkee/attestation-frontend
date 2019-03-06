@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -8,9 +8,10 @@ import { AppComponent } from './app.component';
 import { AppService } from './app.service';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './core';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { AuthService } from './account/auth.service';
-import { TeacherModule } from './teacher/teacher.module';
-import { HeadModule } from './head/head.module';
+import { AttestationModule } from './head/modules/attestation/attestation.module';
 
 @NgModule({
   declarations: [
@@ -23,10 +24,14 @@ import { HeadModule } from './head/head.module';
     BrowserAnimationsModule,
     FormsModule,
     CoreModule,
-    TeacherModule,
-    HeadModule
+    AttestationModule,
   ],
-  providers: [AppService, AuthService],
+  providers: [
+    AppService,
+    AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

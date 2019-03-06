@@ -8,10 +8,12 @@ import { MatButtonModule,
          MatToolbarModule,
          MatMenuModule,
          MatIconModule,
-         MatProgressSpinnerModule
+         MatProgressSpinnerModule,
+         MatSidenavModule,
+         MatButtonToggleModule,
+         MatListModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 @NgModule({
   declarations: [],
   imports: [
@@ -26,7 +28,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatMenuModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatButtonToggleModule,
+    MatListModule,
   ],
   exports: [
     FormsModule,
@@ -39,7 +44,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatTableModule,
     MatMenuModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatButtonToggleModule,
+    MatListModule
   ]
 })
 export class SharedModule { }

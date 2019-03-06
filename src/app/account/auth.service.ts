@@ -1,48 +1,51 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { tap, shareReplay } from 'rxjs/operators';
+import { throwError, BehaviorSubject, Subject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { URL_CONFIG } from '@atestattion/config/config';
+import { User } from '@atestattion/shared/models/user';
 
-@Injectable()
+
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
+
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
+
   constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  login(email: string, password: string ): Observable<any> {
-    return this.http.post<any>('/api/login', {email, password}).pipe(
-      tap(res => this.setSession),
-      shareReplay(1)
-    );
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
   }
 
-  private setSession(authResult) {
-    // const expiresAt = moment().add(authResult.expiresIn,'second');
+  login(login: string, password: string ): Observable<User> {
+    return this.http.post<any>(URL_CONFIG.loginUrl, {login, password}).pipe(
+      map(user => {
+        // login successful if there's a jwt token in the response
+        if (user && user.token) {
+            // tore user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+        }
 
-    localStorage.setItem('id_token', authResult.idToken);
-    // jlocalStorage.setItem("expires_at", JSON.stringify();
+        return user;
+    }));
   }
+
   logout() {
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-  }
-
-  public isLoggedIn() {
-    // return moment().isBefore(this.getExpiration());
-  }
-
-  public isLoggedOut() {
-    // return !this.isLoggedIn();
-  }
-
-    // getExpiration() {
-    //     const expiration = localStorage.getItem("expires_at");
-    //     const expiresAt = JSON.parse(expiration);
-    //     return moment(expiresAt);
-    // }
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+}
 
   private handleError(error: Response): Observable<never> {
     console.error(error);
     return throwError(error);
   }
+
 }

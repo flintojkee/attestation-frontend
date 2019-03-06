@@ -8,13 +8,10 @@ import { AppService } from './app.service';
 })
 export class AppComponent implements OnInit {
   title = 'attestation-frontend';
-  msg: string;
-  constructor(private appService: AppService) {
+
+  constructor() {
   }
   ngOnInit() {
-    this.appService.testRoute().subscribe(data =>{
-      this.msg = data['msg']
-    });
   }
 
 }
