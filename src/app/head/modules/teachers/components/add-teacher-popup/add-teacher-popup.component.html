@@ -1,0 +1,104 @@
+<h1 mat-dialog-title>Додати нового вчителя</h1>
+<mat-dialog-content class="teacher-form" [formGroup]="teacherForm">
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Табельний номер"
+           type="number"
+           formControlName="personnel_number">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+      <input matInput
+             placeholder="Рівень акредитації"
+             formControlName="accreditation_level">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Дата народження"
+           type="date"
+           formControlName="birth_date">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Науковий ступінь"
+           formControlName="degree">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Номер трудової книжки"
+           type="number"
+           formControlName="employment_history">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Стаж"
+           type="number"
+           formControlName="experience">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Навчальний заклад"
+           formControlName="educational_institution">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Рік випуску"
+           type="number"
+           formControlName="graduation_year">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Спеціальність"
+           formControlName="specialty">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Прізвище"
+           formControlName="surname">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Ім'я"
+           formControlName="name">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="По-батькові"
+           formControlName="middle_name">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Рік наступної атестації"
+           type="number"
+           formControlName="next_attestation_date">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Рік попередньої атестації"
+           type="number"
+           formControlName="previous_attestation_date">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Посада"
+           formControlName="position">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Категорія"
+           formControlName="qualification_category">
+  </mat-form-field>
+  <mat-form-field class="teacher-form__input">
+    <input matInput
+           placeholder="Звання"
+           formControlName="rank">
+  </mat-form-field>
+
+
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button [disabled]="!teacherForm.valid" class="mat-raised-button mat-primary" (click)="save()">Save</button>
+</mat-dialog-actions>

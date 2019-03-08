@@ -11,8 +11,8 @@ const routes: Routes = [
   {
     path: 'head',
     loadChildren: 'app/head/head.module#HeadModule',
-    // canActivate: [AuthGuard],
-    // data: { roles: [AccessLevel.head] }
+    canActivate: [AuthGuard],
+    data: { roles: [AccessLevel.head] }
   },
   {
     path: '**',

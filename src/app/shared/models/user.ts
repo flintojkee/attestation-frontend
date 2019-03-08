@@ -1,6 +1,6 @@
 export class User {
   token: string;
-  accessLevel: number;
+  access_level: number;
 }
 
 export enum AccessLevel {

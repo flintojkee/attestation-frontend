@@ -32,9 +32,6 @@ export class LoginComponent implements OnInit {
 
     // reset login status
     this.authService.logout();
-
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   get f() { return this.loginForm.controls; }
@@ -52,7 +49,7 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {
-                this.router.navigate([this.returnUrl]);
+                this.router.navigate(['/head']);
             },
             error => {
                 this.error = error;
