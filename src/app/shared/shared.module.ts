@@ -11,7 +11,9 @@ import { MatButtonModule,
          MatProgressSpinnerModule,
          MatSidenavModule,
          MatButtonToggleModule,
-         MatListModule
+         MatListModule,
+         MatSnackBarModule,
+         MatSelectModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
@@ -32,7 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSidenavModule,
     MatButtonToggleModule,
     MatListModule,
-    
+    MatSnackBarModule,
+    MatSelectModule
+
   ],
   exports: [
     FormsModule,
@@ -48,7 +52,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatButtonToggleModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }

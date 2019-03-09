@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { HeadService } from '@atestattion/head/shared/head.service';
 
 @Component({
   selector: 'app-add-teacher-popup',
@@ -9,7 +10,12 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AddTeacherPopupComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<AddTeacherPopupComponent>, private formBuilder: FormBuilder) { }
+  constructor(
+    private headService: HeadService,
+    public dialogRef: MatDialogRef<AddTeacherPopupComponent>,
+    private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar
+    ) { }
   teacherForm: FormGroup;
 
   ngOnInit() {
@@ -28,35 +34,19 @@ export class AddTeacherPopupComponent implements OnInit {
       personnel_number: [101, Validators.required],
       position: ['ukr', Validators.required],
       previous_attestation_date: [2015, Validators.required],
-      qualification_category: ['SPEC1', Validators.required],
-      rank: ['RANK1', Validators.required],
+      qualification_category: ['SPEC_1', Validators.required],
+      rank: ['RANK1'],
       specialty: ['kek', Validators.required],
   });
   }
   get f() { return this.teacherForm.controls; }
 
   save() {
-    this.dialogRef.close(this.teacherForm.value);
+    this.dialogRef.close();
+    this.headService.addTeacher(this.teacherForm.value);
   }
   close(): void {
     this.dialogRef.close();
   }
 
 }
-// accreditation_level: ['', Validators.required],
-// birth_date: ['', Validators.required],
-// degree: ['', Validators.required],
-// educational_institution: ['', Validators.required],
-// employment_history: ['', Validators.required],
-// experience: ['', Validators.required],
-// graduation_year: ['', Validators.required],
-// middle_name: ['', Validators.required],
-// name: ['', Validators.required],
-// surname: ['', Validators.required],
-// next_attestation_date: ['', Validators.required],
-// personnel_number: ['', Validators.required],
-// position: ['', Validators.required],
-// previous_attestation_date: ['', Validators.required],
-// qualification_category: ['', Validators.required],
-// rank: ['', Validators.required],
-// specialty: ['', Validators.required],

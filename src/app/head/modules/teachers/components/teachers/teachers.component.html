@@ -1,17 +1,39 @@
 <div class="teachers">
+  <form *ngIf="filtersForm" class="teachers__filters" [formGroup]="filtersForm">
+    <mat-form-field class="teachers__filter">
+      <mat-select [formControlName]="'qualification_category'" placeholder="Оберіть категорію">
+        <mat-option>Будь-яка</mat-option>
+        <mat-option *ngFor="let category of categoryOptions" [value]="category.option">{{category.option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="teachers__filter">
+      <mat-select [formControlName]="'rank'" placeholder="Оберіть звання">
+          <mat-option>Будь-яке</mat-option>
+          <mat-option *ngFor="let rank of rankOptions" [value]="rank.option">{{rank.option}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button (click)="filterTeachers()" mat-flat-button color="primary">Фільтрувати</button>
+  </form>
   <mat-spinner class="spinner" *ngIf="isLoaded"></mat-spinner>
 <mat-list  *ngIf="!isLoaded" class="teachers__list">
-  <mat-list-item class="teachers__teacher" *ngFor="let teacher of teachers">
+  <mat-list-item class="teachers__teacher" *ngFor="let teacher of teachers$ | async">
     <img matListAvatar src="assets/images/teacher-photo.png">
-    <h3 matLine> {{teacher.surname}}</h3>
-    <p matLine>
-    </p>
-    <button mat-mini-fab>
+    <div matLine>
+      <a class="teachers__teacher-name" [routerLink]="[teacher.personnel_number]">{{teacher.name}} {{teacher.surname}}</a>
+    </div>
+    <div matLine>
+      <p *ngIf="teacher.rank">Звання: {{teacher.rank}}</p>
+      <p>Категорія: {{teacher.qualification_category}}</p>
+    </div>
+    <button (click)="openEditTeacherPopup(teacher.personnel_number)" class="teachers__edit-teacher-button" mat-mini-fab>
       <mat-icon>edit</mat-icon>
+    </button>
+    <button (click)="deleteTeacher(teacher.personnel_number)" color="warn" mat-mini-fab>
+      <mat-icon>delete</mat-icon>
     </button>
   </mat-list-item>
     <mat-list-item>
-        <button (click)="openPopup()" class="teachers__add-teacher-button" color="primary" mat-mini-fab>
+        <button (click)="openAddTeacherPopup()" class="teachers__add-teacher-button" color="primary" mat-mini-fab>
           <mat-icon>add</mat-icon>
         </button>
     </mat-list-item>

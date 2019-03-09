@@ -25,13 +25,14 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
     BrowserAnimationsModule,
     FormsModule,
     CoreModule,
-    AttestationModule,
+    AttestationModule
   ],
   providers: [
     AppService,
     AuthService,
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
