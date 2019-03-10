@@ -27,6 +27,7 @@ export class HeadService {
   }
 
   addTeacher(teacher: Teacher) {
+    console.log(teacher);
     this.createTeacher(teacher).subscribe(res => {
      if (res.status === 201) {
         teacher.qualification_category = Category[teacher.qualification_category];
@@ -39,7 +40,7 @@ export class HeadService {
   editTeacher(teacher: Teacher, oldTeacher: Teacher) {
     this.updateTeacher(teacher).subscribe(res => {
       if (res.status === 200) {
-        const index = this.teachers$Value.indexOf(oldTeacher);
+        const index = this.teachers$Value.findIndex(el => el.personnel_number === oldTeacher.personnel_number);
         if (index > -1) {
           teacher.qualification_category = Category[teacher.qualification_category];
           teacher.rank = Rank[teacher.rank];

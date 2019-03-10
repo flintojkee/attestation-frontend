@@ -1,2 +1,43 @@
-<pre>{{teacher | json}}</pre>
-<img src="https://school173.com.ua/assets/img/department/teachers/vasilenko.jpg" alt="teacher">
+<div class="teacher fw">
+  <div class="teacher__avatar">
+    <img [src]="teacher.avatar_url" [alt]="teacher.surname">
+  </div>
+  <div class="teacher__content">
+    <h3 class="teacher__name">{{teacher.surname}} {{teacher.name}} {{teacher.middle_name}}</h3>
+    <div class="teacher__wrapper fw">
+  <div class="teacher__block teacher__block--info">
+      <h4 class="teacher__block-header">Інформація</h4>
+      <div class="teacher__block-content">
+        <ul class="teacher__list">
+          <li>Дата народження: {{teacher.birth_date}}</li>
+          <li>Посада: {{teacher.position}}</li>
+          <li>Науковий ступінь: {{teacher.degree}}</li>
+          <li>Стаж: {{teacher.experience}} років</li>
+        </ul>
+      </div>
+    </div>
+    <div class="teacher__block">
+        <h4 class="teacher__block-header">Освіта</h4>
+        <div class="teacher__block-content">
+          <ul class="teacher__list">
+            <li>Заклад: {{teacher.educational_institution}}</li>
+            <li>Спеціальність: {{teacher.specialty}}</li>
+            <li>Рівень акредетації: {{teacher.accreditation_level}}</li>
+            <li>Рік випуску: {{teacher.graduation_year}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="teacher__block">
+        <h4 class="teacher__block-header">Атестація</h4>
+        <div class="teacher__block-content">
+          <ul class="teacher__list">
+            <li>Категорія: {{teacher.qualification_category}}</li>
+            <li>Звання: {{teacher.rank}}</li>
+            <li>Попередня атестація: {{teacher.previous_attestation_date}} рік</li>
+            <li>Наступна атестація: {{teacher.next_attestation_date}} рік</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

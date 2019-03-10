@@ -16,6 +16,7 @@ export class Teacher {
   rank?: Rank;
   specialty?: string;
   surname: string;
+  avatar_url?: string;
 }
 
 export enum Category {

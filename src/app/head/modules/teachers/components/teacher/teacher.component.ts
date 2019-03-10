@@ -6,7 +6,7 @@ import { takeWhile } from 'rxjs/operators';
 @Component({
   selector: 'app-teacher',
   templateUrl: './teacher.component.html',
-  styleUrls: ['./teacher.component.scss']
+  styleUrls: ['./teacher.component.sass']
 })
 export class TeacherComponent implements OnInit, OnDestroy {
 

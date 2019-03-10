@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { HeadService } from '@atestattion/head/shared/head.service';
+import { Category, Rank } from '@atestattion/head/shared/teacher';
 
 @Component({
   selector: 'app-add-teacher-popup',
@@ -17,7 +18,8 @@ export class AddTeacherPopupComponent implements OnInit {
     private snackBar: MatSnackBar
     ) { }
   teacherForm: FormGroup;
-
+  categoryOptions = Object.keys(Category).map(key => ({ value: key, option: Category[key] }));
+  rankOptions = Object.keys(Rank).map(key => ({ value: key, option: Rank[key] }));
   ngOnInit() {
     this.teacherForm = this.formBuilder.group({
       accreditation_level: [4, Validators.required],
@@ -37,6 +39,7 @@ export class AddTeacherPopupComponent implements OnInit {
       qualification_category: ['SPEC_1', Validators.required],
       rank: ['RANK1'],
       specialty: ['kek', Validators.required],
+      avatar_url: ['https://school173.com.ua/assets/img/department/teachers/vasilenko.jpg']
   });
   }
   get f() { return this.teacherForm.controls; }

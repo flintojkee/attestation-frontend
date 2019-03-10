@@ -12,10 +12,7 @@
              formControlName="accreditation_level">
   </mat-form-field>
   <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Дата народження"
-           type="date"
-           formControlName="birth_date">
+    <input matInput type="date" placeholder="Дата народження" formControlName="birth_date">
   </mat-form-field>
   <mat-form-field class="teacher-form__input">
     <input matInput
@@ -82,20 +79,23 @@
            placeholder="Посада"
            formControlName="position">
   </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Категорія"
-           formControlName="qualification_category">
+  <mat-form-field class="teachers__filter">
+    <mat-select [formControlName]="'qualification_category'" placeholder="Оберіть категорію">
+      <mat-option>Будь-яка</mat-option>
+      <mat-option *ngFor="let category of categoryOptions" [value]="category.value">{{category.option}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="teachers__filter">
+    <mat-select [formControlName]="'rank'" placeholder="Оберіть звання">
+        <mat-option>Будь-яке</mat-option>
+        <mat-option *ngFor="let rank of rankOptions" [value]="rank.value">{{rank.option}}</mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Звання"
-           formControlName="rank">
-  </mat-form-field>
-
-
-
-
+      <input matInput
+             placeholder="Посилання на аватар"
+             formControlName="avatar_url">
+    </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>

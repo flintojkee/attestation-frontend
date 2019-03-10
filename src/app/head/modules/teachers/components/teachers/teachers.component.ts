@@ -33,9 +33,6 @@ export class TeachersComponent implements OnInit {
     this.createForm();
   }
 
-  getTeacher(id: number) {
-    this.headService.getTeacherById(id).subscribe(data => console.log(data));
-  }
 
   deleteTeacher(id: number) {
     this.headService.removeTeacher(id);
@@ -58,10 +55,11 @@ export class TeachersComponent implements OnInit {
 
   openEditTeacherPopup(id: number): void {
     const popupConfig = new MatDialogConfig();
-
     popupConfig.disableClose = true;
-    popupConfig.data = id;
-    this.popup.open(EditTeacherPopupComponent, popupConfig);
+    this.headService.getTeacherById(id).subscribe(data => {
+      popupConfig.data = data;
+      this.popup.open(EditTeacherPopupComponent, popupConfig);
+    });
   }
 
 
