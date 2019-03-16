@@ -15,11 +15,14 @@ import { MatButtonModule,
          MatSnackBarModule,
          MatSelectModule,
          MatDatepickerModule,
-         MatNativeDateModule
+         MatNativeDateModule,
+         MatAutocompleteModule,
+         MatChipsModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TeacherComponent } from './components/teacher/teacher.component';
 @NgModule({
-  declarations: [],
+  declarations: [TeacherComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -39,7 +42,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatAutocompleteModule,
+    MatChipsModule
 
   ],
   exports: [
@@ -60,7 +65,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    TeacherComponent,
+    MatAutocompleteModule,
+    MatChipsModule
 
   ]
 })

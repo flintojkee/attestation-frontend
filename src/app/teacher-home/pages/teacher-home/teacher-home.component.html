@@ -3,12 +3,10 @@
     <mat-drawer-container class="head-home__body">
       <mat-drawer mode="side" opened>
         <mat-button-toggle-group [(ngModel)]="toggleValue" name="menu" aria-label="Menu" vertical="true">
-          <mat-button-toggle [routerLink]="'teachers'" value="teachers">Вчителі</mat-button-toggle>
+          <mat-button-toggle [routerLink]="'profile'" value="teachers">Профіль</mat-button-toggle>
           <mat-button-toggle [routerLink]="'attestation'" value="attestation">Атестація</mat-button-toggle>
           <mat-button-toggle value="courses">Курси</mat-button-toggle>
-          <mat-button-toggle value="attestationCommission">Атестаційна комісія</mat-button-toggle>
           <mat-button-toggle value="appeal">Апеляція</mat-button-toggle>
-          <mat-button-toggle value="analytics">Аналітика</mat-button-toggle>
         </mat-button-toggle-group>
       </mat-drawer>
       <mat-drawer-content class="head-home__content">
@@ -17,5 +15,3 @@
   </mat-drawer-container>
   </div>
 </div>
-
-

@@ -1,20 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TeachersComponent } from './components/teachers/teachers.component';
-import { TeacherResolver } from '@atestattion/shared/resolvers/teacher.resolver';
 import { TeacherComponent } from '@atestattion/shared/components/teacher/teacher.component';
+import { TeacherProfileResolver } from '@atestattion/teacher-home/shared/teacher-profile.resolver';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: TeachersComponent
-  },
-  {
-    path: ':id',
     component: TeacherComponent,
     resolve: {
-      teacher: TeacherResolver
+      teacher: TeacherProfileResolver
     }
   }
 ];
@@ -23,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TeachersRoutingModule { }
+export class TeacherProfileRoutingModule { }

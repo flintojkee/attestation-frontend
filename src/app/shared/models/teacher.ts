@@ -1,3 +1,5 @@
+import { Subject } from './subject';
+
 export class Teacher {
   accreditation_level?: string;
   birth_date?: Date;
@@ -17,6 +19,7 @@ export class Teacher {
   specialty?: string;
   surname: string;
   avatar_url?: string;
+  subjects?: Subject[];
 }
 
 export enum Category {
@@ -37,4 +40,5 @@ export enum Rank {
 export class TeacherFilters {
   qualification_category: Category;
   rank: Rank;
+  subject_name: string;
 }

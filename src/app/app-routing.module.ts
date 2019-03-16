@@ -15,6 +15,12 @@ const routes: Routes = [
     data: { roles: [AccessLevel.head] }
   },
   {
+    path: 'teacher',
+    loadChildren: 'app/teacher-home/teacher-home.module#TeacherHomeModule',
+    canActivate: [AuthGuard],
+    data: { roles: [AccessLevel.teacher] }
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: ''

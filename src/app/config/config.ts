@@ -5,5 +5,7 @@ const authBase = environment.apiUrl;
 export let URL_CONFIG = {
   loginUrl: authBase + '/login',
   teacherUrl: authBase + '/teacher',
-  teachersUrl: authBase + '/teachers'
+  teacherProfileUrl: authBase + '/profile',
+  teachersUrl: authBase + '/teachers',
+  subjectUrl: authBase + '/subject'
 };

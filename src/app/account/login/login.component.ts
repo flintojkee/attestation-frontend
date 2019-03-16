@@ -3,6 +3,7 @@ import { AuthService } from '../auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { AccessLevel } from '@atestattion/shared/models/user';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +50,17 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {
-                this.router.navigate(['/head']);
+                switch (data.access_level) {
+                  case AccessLevel.head:
+                    this.router.navigate(['/head/teachers']);
+                    break;
+                  case AccessLevel.teacher:
+                    this.router.navigate(['/teacher/profile']);
+                    break;
+                  default:
+                  this.router.navigate(['/']);
+                }
+
             },
             error => {
                 this.error = error;

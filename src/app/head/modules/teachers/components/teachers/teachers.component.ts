@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HeadService } from '@atestattion/head/shared/head.service';
-import { Teacher, Category, Rank, TeacherFilters } from '@atestattion/head/shared/teacher';
+import { Teacher, Category, Rank, TeacherFilters } from '@atestattion/shared/models/teacher';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AddTeacherPopupComponent } from '../add-teacher-popup/add-teacher-popup.component';
 import { Observable, of } from 'rxjs';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditTeacherPopupComponent } from '../edit-teacher-popup/edit-teacher-popup.component';
+import { Subject } from '@atestattion/shared/models/subject';
 
 
 @Component({
@@ -26,9 +27,11 @@ export class TeachersComponent implements OnInit {
   filtersForm: FormGroup;
   categoryOptions = Object.keys(Category).map(key => ({ value: key, option: Category[key] }));
   rankOptions = Object.keys(Rank).map(key => ({ value: key, option: Rank[key] }));
+  subjectOptions$ = new Observable<Subject[]>();
 
   ngOnInit() {
     this.teachers$ = this.headService.teachersValue;
+    this.subjectOptions$ = this.headService.getAllSubjects();
     this.isLoaded = false;
     this.createForm();
   }
@@ -67,7 +70,12 @@ export class TeachersComponent implements OnInit {
     this.filtersForm = this.formBuilder.group({
       qualification_category: [''],
       rank: [''],
+      subject_name: ['']
     });
+  }
+
+  getTeacherSubjects(subjects: Subject[]) {
+    return subjects.map(sub => sub.subject_name).join(', ');
   }
 
 }

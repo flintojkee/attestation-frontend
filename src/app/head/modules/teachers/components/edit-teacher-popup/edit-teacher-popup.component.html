@@ -1,104 +1,168 @@
-<h1 mat-dialog-title>Додати нового вчителя</h1>
-<mat-dialog-content class="teacher-form" [formGroup]="editTeacherForm">
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Табельний номер"
-           type="number"
-           formControlName="personnel_number">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
+<h1 mat-dialog-title class="edit-teacher__header">Редагувати вчителя</h1>
+<mat-dialog-content class="edit-teacher__form" [formGroup]="editTeacherForm">
+
+  <div class="edit-teacher__inputs-wrapper fw">
+    <div class="edit-teacher__icon-wrapper">
+        <mat-icon class="edit-teacher__icon">person</mat-icon>
+    </div>
+
+    <mat-form-field class="edit-teacher__form-input col-3">
+        <input matInput
+              placeholder="Прізвище"
+              formControlName="surname">
+      </mat-form-field>
+      <mat-form-field class="edit-teacher__form-input col-3">
+        <input matInput
+              placeholder="Ім'я"
+              formControlName="name">
+      </mat-form-field>
+      <mat-form-field class="edit-teacher__form-input col-3">
+        <input matInput
+              placeholder="По-батькові"
+              formControlName="middle_name">
+      </mat-form-field>
+  </div>
+  <div class="edit-teacher__inputs-container fw">
+    <div class="edit-teacher__inputs-wrapper fw col-3">
+      <div class="edit-teacher__icon-wrapper">
+        <mat-icon class="edit-teacher__icon">folder_shared</mat-icon>
+      </div>
+      <mat-form-field class="edit-teacher__form-input">
+          <input matInput
+                placeholder="Табельний номер"
+                type="number"
+                formControlName="personnel_number">
+      </mat-form-field>
+      <mat-form-field class="edit-teacher__form-input">
       <input matInput
-             placeholder="Рівень акредитації"
-             formControlName="accreditation_level">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput type="date" placeholder="Дата народження" formControlName="birth_date">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Науковий ступінь"
-           formControlName="degree">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Номер трудової книжки"
-           type="number"
-           formControlName="employment_history">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Стаж"
-           type="number"
-           formControlName="experience">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
+            placeholder="Номер трудової книжки"
+            type="number"
+            formControlName="employment_history">
+    </mat-form-field>
+    </div>
+
+    <div class="edit-teacher__inputs-wrapper fw col-3 col-3--rest">
+      <div class="edit-teacher__icon-wrapper">
+        <mat-icon class="edit-teacher__icon">folder_shared</mat-icon>
+      </div>
+      <mat-form-field class="edit-teacher__form-input">
+        <input matInput
+              placeholder="Посада"
+              formControlName="position">
+      </mat-form-field>
+      <mat-form-field class="edit-teacher__form-input">
+        <mat-chip-list #subjectsList>
+          <mat-chip
+              *ngFor="let subject of subjects"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(subject)">
+              {{subject.subject_name}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input
+              placeholder="Додати предмет"
+              #subjectInput
+              formControlName="subjects"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="subjectsList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addSubject($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let subject of filteredSubjects | async" [value]="subject">
+              {{subject.subject_name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+    </div>
+  </div>
+  <div class="edit-teacher__inputs-container fw">
+
+  <div class="edit-teacher__inputs-wrapper fw col-3--rest">
+    <div class="edit-teacher__icon-wrapper">
+        <mat-icon class="edit-teacher__icon">school</mat-icon>
+      </div>
+     <mat-form-field class="edit-teacher__form-input col-3">
     <input matInput
            placeholder="Навчальний заклад"
            formControlName="educational_institution">
   </mat-form-field>
-  <mat-form-field class="teacher-form__input">
+  <mat-form-field class="edit-teacher__form-input col-3">
+      <input matInput
+             placeholder="Рівень акредитації"
+             formControlName="accreditation_level">
+  </mat-form-field>
+  <mat-form-field class="edit-teacher__form-input col-3">
+      <input matInput
+             placeholder="Спеціальність"
+             formControlName="specialty">
+    </mat-form-field>
+    <mat-form-field class="edit-teacher__form-input col-3">
+        <input matInput
+               placeholder="Науковий ступінь"
+               formControlName="degree">
+      </mat-form-field>
+      <mat-form-field class="edit-teacher__form-input col-3">
     <input matInput
            placeholder="Рік випуску"
            type="number"
            formControlName="graduation_year">
   </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Спеціальність"
-           formControlName="specialty">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Прізвище"
-           formControlName="surname">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Ім'я"
-           formControlName="name">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="По-батькові"
-           formControlName="middle_name">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Рік наступної атестації"
-           type="number"
-           formControlName="next_attestation_date">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Рік попередньої атестації"
-           type="number"
-           formControlName="previous_attestation_date">
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
-    <input matInput
-           placeholder="Посада"
-           formControlName="position">
-  </mat-form-field>
-  <mat-form-field class="teachers__filter">
-    <mat-select [formControlName]="'qualification_category'" placeholder="Оберіть категорію">
-      <mat-option>Будь-яка</mat-option>
-      <mat-option *ngFor="let category of categoryOptions" [value]="category.value">{{category.option}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="teachers__filter">
-    <mat-select [formControlName]="'rank'" placeholder="Оберіть звання">
-        <mat-option>Будь-яке</mat-option>
-        <mat-option *ngFor="let rank of rankOptions" [value]="rank.value">{{rank.option}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="teacher-form__input">
+  <mat-form-field class="edit-teacher__form-input col-3">
       <input matInput
-             placeholder="Посилання на аватар"
-             formControlName="avatar_url">
+             placeholder="Стаж"
+             type="number"
+             formControlName="experience">
     </mat-form-field>
+  </div>
+  <div class="edit-teacher__inputs-wrapper fw col-3">
+      <div class="edit-teacher__icon-wrapper">
+          <mat-icon class="edit-teacher__icon">contacts icon</mat-icon>
+        </div>
+      <mat-form-field class="edit-teacher__form-input">
+          <input matInput type="date" placeholder="Дата народження" formControlName="birth_date">
+        </mat-form-field>
+      <mat-form-field class="edit-teacher__form-input">
+        <input matInput
+               placeholder="Посилання на аватар"
+               formControlName="avatar_url">
+      </mat-form-field>
+  </div>
+</div>
+  <div class="edit-teacher__inputs-wrapper fw">
+      <div class="edit-teacher__icon-wrapper">
+          <mat-icon class="edit-teacher__icon">collections_bookmark</mat-icon>
+        </div>
+      <mat-form-field class="edit-teacher__form-input col-2">
+          <input matInput
+                 placeholder="Рік наступної атестації"
+                 type="number"
+                 formControlName="next_attestation_date">
+        </mat-form-field>
+        <mat-form-field class="edit-teacher__form-input col-2">
+          <input matInput
+                 placeholder="Рік попередньої атестації"
+                 type="number"
+                 formControlName="previous_attestation_date">
+        </mat-form-field>
+        <mat-form-field class="edit-teacher__form-input col-2">
+            <mat-select [formControlName]="'qualification_category'" placeholder="Оберіть категорію">
+              <mat-option *ngFor="let category of categoryOptions" [value]="category.value">{{category.option}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="edit-teacher__form-input col-2">
+            <mat-select [formControlName]="'rank'" placeholder="Оберіть звання">
+                <mat-option>Немає</mat-option>
+                <mat-option *ngFor="let rank of rankOptions" [value]="rank.value">{{rank.option}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </div>
+
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close()">Close</button>
-  <button [disabled]="!editTeacherForm.valid" class="mat-raised-button mat-primary" (click)="save()">Save</button>
+<mat-dialog-actions class="edit-teacher__footer">
+  <button class="mat-raised-button"(click)="close()">Закрити</button>
+  <button [disabled]="!editTeacherForm.valid" class="mat-raised-button mat-primary" (click)="save()">Зберегти</button>
 </mat-dialog-actions>

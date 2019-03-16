@@ -3,17 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { throwError, BehaviorSubject, Subject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URL_CONFIG } from '@atestattion/config/config';
-import { User, AccessLevel } from '@atestattion/shared/models/user';
+import { User } from '@atestattion/shared/models/user';
 import { Router } from '@angular/router';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
-
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-
   constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { HeadService } from './head.service';
-import { Teacher } from './teacher';
+
+import { Teacher } from '../models/teacher';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { HeadService } from '@atestattion/head/shared/head.service';
 
 @Injectable()
 export class TeacherResolver implements Resolve<Teacher> {

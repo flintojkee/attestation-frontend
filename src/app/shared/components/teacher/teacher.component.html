@@ -1,5 +1,5 @@
 <div class="teacher fw">
-  <div class="teacher__avatar">
+  <div *ngIf="teacher.avatar_url" class="teacher__avatar">
     <img [src]="teacher.avatar_url" [alt]="teacher.surname">
   </div>
   <div class="teacher__content">
@@ -11,7 +11,21 @@
         <ul class="teacher__list">
           <li>Дата народження: {{teacher.birth_date}}</li>
           <li>Посада: {{teacher.position}}</li>
-          <li>Науковий ступінь: {{teacher.degree}}</li>
+          <ng-container *ngIf="teacher.subjects.length">
+              <ng-template [ngIf]="departments.length === 1" [ngIfElse]="subjectsArr">
+                  <li>Кафедра: {{departmentsStr}}</li>
+                </ng-template>
+                <ng-template #subjectsArr>
+                  <li>Кафедри: {{departmentsStr}}</li>
+                </ng-template>
+              <ng-template [ngIf]="teacher.subjects.length === 1" [ngIfElse]="subjectsArr">
+                  <li>Предмет: {{subjects}}</li>
+                </ng-template>
+                <ng-template #subjectsArr>
+                  <li>Предмети: {{subjects}}</li>
+                </ng-template>
+          </ng-container>
+          <li *ngIf="teacher.degree">Науковий ступінь: {{teacher.degree}}</li>
           <li>Стаж: {{teacher.experience}} років</li>
         </ul>
       </div>

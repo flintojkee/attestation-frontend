@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { URL_CONFIG } from '@atestattion/config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
-import { Teacher, TeacherFilters, Category, Rank } from './teacher';
+import { Teacher, TeacherFilters, Category, Rank } from '../../shared/models/teacher';
 import { BehaviorSubject, of } from 'rxjs';
+import { Subject } from '@atestattion/shared/models/subject';
 @Injectable()
 export class HeadService {
 
@@ -15,6 +16,7 @@ export class HeadService {
   public teachers: Observable<Array<Teacher>> = this.teachers$.asObservable();
 
   private teacherUrl = URL_CONFIG.teacherUrl;
+  private subjectUrl = URL_CONFIG.subjectUrl;
   private teachersUrl = URL_CONFIG.teachersUrl;
   private headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
 
@@ -50,9 +52,9 @@ export class HeadService {
       }
     });
   }
-  getLocalTeacherById(id: number): Teacher {
-    return this.teachers$Value.filter(el => el.personnel_number === id)[0];
-  }
+  // getLocalTeacherById(id: number): Teacher {
+  //   return this.teachers$Value.filter(el => el.personnel_number === id)[0];
+  // }
 
   removeTeacher(id: number) {
     this.deleteTeacher(id).subscribe(res => {
@@ -71,9 +73,9 @@ export class HeadService {
   private updateTeacher(teacher: Teacher) {
     return this.http
     .put(
-    `${this.teacherUrl}/${teacher.personnel_number}`,
-    JSON.stringify(teacher),
-    {headers: this.headers, observe: 'response'}
+      `${this.teacherUrl}/${teacher.personnel_number}`,
+      JSON.stringify(teacher),
+      {headers: this.headers, observe: 'response'}
     );
   }
   getAllTeachers(): Observable<Array<Teacher>> {
@@ -81,6 +83,10 @@ export class HeadService {
   }
   getTeacherById(id: number): Observable<Teacher> {
     return this.http.get<Teacher>(`${this.teacherUrl}/${id}`);
+  }
+
+  getAllSubjects(): Observable<Array<Subject>> {
+    return this.http.get<Array<Subject>>(`${this.subjectUrl}`);
   }
 
   filterTeachers(filters: TeacherFilters) {
@@ -98,6 +104,9 @@ export class HeadService {
     }
     if (teacherFilters.rank) {
       url += `&rank=${teacherFilters.rank}`;
+    }
+    if (teacherFilters.subject_name) {
+      url += `&subject_name=${teacherFilters.subject_name}`;
     }
 
     return url;

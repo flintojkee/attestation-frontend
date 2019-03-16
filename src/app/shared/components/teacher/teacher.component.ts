@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Teacher } from '@atestattion/head/shared/teacher';
+import { Teacher } from '@atestattion/shared/models/teacher';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 
@@ -11,6 +11,9 @@ import { takeWhile } from 'rxjs/operators';
 export class TeacherComponent implements OnInit, OnDestroy {
 
   teacher: Teacher;
+  subjects: string;
+  departments: string[];
+  departmentsStr: string;
   private alive: boolean;
 
   constructor(
@@ -25,6 +28,9 @@ export class TeacherComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: { teacher: Teacher }) => {
         this.teacher = data.teacher;
+        this.departments = Array.from(new Set(this.teacher.subjects.map(sub => sub.department)));
+        this.departmentsStr = this.departments.join(', ');
+        this.subjects = this.teacher.subjects.map(subject => subject.subject_name).join(', ');
       });
   }
 
