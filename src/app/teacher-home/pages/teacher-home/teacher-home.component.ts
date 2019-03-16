@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./teacher-home.component.scss']
 })
 export class TeacherHomeComponent implements OnInit {
-
+  toggleValue: string;
   constructor() { }
 
   ngOnInit() {
