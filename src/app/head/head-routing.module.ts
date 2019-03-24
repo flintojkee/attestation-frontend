@@ -14,6 +14,14 @@ const routes: Routes = [
       {
         path: 'attestation',
         loadChildren: 'app/head/modules/attestation/attestation.module#AttestationModule',
+      },
+      {
+        path: 'applications',
+        loadChildren: 'app/head/modules/applications/applications.module#ApplicationsModule',
+      },
+      {
+        path: 'analytics',
+        loadChildren: 'app/head/modules/analytics/analytics.module#AnalyticsModule',
       }
     ]
   }

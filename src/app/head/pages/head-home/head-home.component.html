@@ -5,10 +5,19 @@
         <mat-button-toggle-group [(ngModel)]="toggleValue" name="menu" aria-label="Menu" vertical="true">
           <mat-button-toggle [routerLink]="'teachers'" value="teachers">Вчителі</mat-button-toggle>
           <mat-button-toggle [routerLink]="'attestation'" value="attestation">Атестація</mat-button-toggle>
+          <mat-button-toggle
+            [routerLink]="'applications'"
+            value="applications"
+            [matBadge]="defermentApplicationsInProgres.length + extraApplicationsInProgres.length"
+            [matBadgeHidden]="(defermentApplicationsInProgres.length + extraApplicationsInProgres.length) < 1"
+            matBadgePosition="above after"
+            matBadgeColor="accent">
+            Заяви
+          </mat-button-toggle>
           <mat-button-toggle value="courses">Курси</mat-button-toggle>
           <mat-button-toggle value="attestationCommission">Атестаційна комісія</mat-button-toggle>
           <mat-button-toggle value="appeal">Апеляція</mat-button-toggle>
-          <mat-button-toggle value="analytics">Аналітика</mat-button-toggle>
+          <mat-button-toggle [routerLink]="'analytics'" value="analytics">Аналітика</mat-button-toggle>
         </mat-button-toggle-group>
       </mat-drawer>
       <mat-drawer-content class="head-home__content">

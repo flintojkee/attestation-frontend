@@ -5,9 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { ApplicationType, ApplicationStatus } from '@atestattion/shared/models/application';
 import { ExtraApplication } from '@atestattion/shared/models/extra-application';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TeacherService } from '@atestattion/teacher-home/shared/teacher.service';
 import { TeacherAttestationService } from '../../shared/teacher-attestation.service';
+import { DefermentApplication } from '@atestattion/shared/models/deferment-application';
 
 @Component({
   selector: 'app-application',
@@ -16,7 +17,9 @@ import { TeacherAttestationService } from '../../shared/teacher-attestation.serv
 })
 export class ApplicationComponent implements OnInit, OnDestroy {
   application: any;
+  type: string;
   applicationForm: FormGroup;
+  submitted = false;
   alive: boolean;
   today = new Date();
   todayString: string;
@@ -30,12 +33,19 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   teacherPersonnelNumber: number;
 
   ngOnInit() {
-    this.teacherService.currentTeacher.subscribe(teacher => {
-      this.teacherPersonnelNumber = teacher.personnel_number;
-    });
+    if (this.teacherService.currentTeacher) {
+      this.teacherService.currentTeacher.subscribe(teacher => {
+        this.teacherPersonnelNumber = teacher.personnel_number;
+      });
+    } else {
+      this.teacherService.getTeacherProfile().subscribe(teacher => {
+        this.teacherPersonnelNumber = teacher.personnel_number;
+      });
+    }
 
     this.todayString = `${this.today.getDate()}.${this.today.getMonth() + 1}.${this.today.getFullYear()} р.`;
-    this.dateString = `${this.today.getFullYear()}-0${this.today.getMonth() + 1}-${this.today.getDate()}`;
+    this.dateString = `${this.today.getFullYear()}-${this.today.getMonth() + 1}-${this.today.getDate()}`;
+
     this.alive = true;
     this.initForm();
     this.route.data
@@ -45,9 +55,13 @@ export class ApplicationComponent implements OnInit, OnDestroy {
       .subscribe((data: { type: ApplicationType }) => {
         switch (data.type) {
           case ApplicationType.extra:
+            this.type = data.type;
             this.application = new ExtraApplication();
             break;
-
+          case ApplicationType.deferment:
+            this.type = data.type;
+            this.application = new DefermentApplication();
+            break;
           default:
             break;
         }
@@ -58,27 +72,59 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     this.alive = false;
   }
 
+  isDeferment() {
+    return this.type === ApplicationType.deferment;
+  }
   saveApplication() {
-    const extraApplication: ExtraApplication = {
-      extra_application_date: this.dateString,
-      extra_application_reason: this.applicationForm.controls.applicationText.value,
-      extra_application_status: ApplicationStatus.IN_PROGRESS,
-      personnel_number: this.teacherPersonnelNumber,
-      referrals: '',
-      name: ''
-    };
-    this.teacherAttestaionService.addExtraApplication(extraApplication);
+    if (this.applicationForm.invalid) {
+      return;
+    }
+    switch (this.type) {
+      case ApplicationType.extra:
+        const extraApplication: ExtraApplication = {
+          extra_application_date: this.dateString,
+          extra_application_reason: this.applicationForm.controls.applicationText.value,
+          extra_application_status: ApplicationStatus.IN_PROGRESS,
+          personnel_number: this.teacherPersonnelNumber,
+          referrals: '',
+          name: '',
+          teacher_position: this.applicationForm.controls.position.value,
+          teacher_pib: this.applicationForm.controls.fullName.value
+        };
+        this.teacherAttestaionService.addApplication(extraApplication, this.type);
+        break;
+      case ApplicationType.deferment:
+        const defermentApplication: DefermentApplication = {
+          deferment_application_date: this.dateString,
+          deferment_application_reason: this.applicationForm.controls.applicationText.value,
+          deferment_application_status: ApplicationStatus.IN_PROGRESS,
+          personnel_number: this.teacherPersonnelNumber,
+          deferment_application_years: 1,
+          referrals: '',
+          name: '',
+          teacher_position: this.applicationForm.controls.position.value,
+          teacher_pib: this.applicationForm.controls.fullName.value
+        };
+        this.teacherAttestaionService.addApplication(defermentApplication, this.type);
+        break;
+      default:
+        break;
+    }
+
   }
 
   initForm() {
     this.applicationForm = this.formBuilder.group({
-      position: [''],
-      fullName: [''],
-      applicationText: [''],
+      position: ['', Validators.required],
+      fullName: ['', Validators.required],
+      applicationText: ['', Validators.required],
+      years: [1, Validators.required]
   });
   }
-
   savePdf() {
+    if (this.applicationForm.invalid) {
+      return;
+    }
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
       const extraApplicationPdf = {
         content: [
@@ -138,9 +184,9 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         ],
         footer: {
           columns: [
-              { width: 'auto', text: this.todayString, margin: [ 30, 0, 0, 0 ]  },
+              { width: 'auto', text: this.todayString, margin: [ 60, 0, 0, 100 ]  },
               { width: '*', text: '' },
-              { width: 'auto', text: '________', margin: [ 0, 0, 30, 0 ] },
+              { width: 'auto', text: '________', margin: [ 0, 0, 60, 100 ] },
           ]
         },
         styles: {

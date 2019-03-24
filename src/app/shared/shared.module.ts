@@ -17,7 +17,10 @@ import { MatButtonModule,
          MatDatepickerModule,
          MatNativeDateModule,
          MatAutocompleteModule,
-         MatChipsModule
+         MatChipsModule,
+         MatExpansionModule,
+         MatBadgeModule,
+         MatTreeModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherComponent } from './components/teacher/teacher.component';
@@ -44,7 +47,10 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
-    MatChipsModule
+    MatChipsModule,
+    MatExpansionModule,
+    MatBadgeModule,
+    MatTreeModule
 
   ],
   exports: [
@@ -68,7 +74,10 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     MatNativeDateModule,
     TeacherComponent,
     MatAutocompleteModule,
-    MatChipsModule
+    MatChipsModule,
+    MatExpansionModule,
+    MatBadgeModule,
+    MatTreeModule
 
   ]
 })

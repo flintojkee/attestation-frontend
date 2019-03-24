@@ -4,9 +4,12 @@ import { URL_CONFIG } from '@atestattion/config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Teacher, TeacherFilters, Category, Rank } from '../../shared/models/teacher';
-import { BehaviorSubject, of } from 'rxjs';
-import { Subject } from '@atestattion/shared/models/subject';
-@Injectable()
+import { BehaviorSubject, of, Subject } from 'rxjs';
+import { Subject as Subj } from '@atestattion/shared/models/subject';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class HeadService {
 
   constructor(private http: HttpClient) {
@@ -15,9 +18,13 @@ export class HeadService {
   private teachers$: BehaviorSubject<Array<Teacher>> = new BehaviorSubject(Array());
   public teachers: Observable<Array<Teacher>> = this.teachers$.asObservable();
 
+  public extraApplications = new BehaviorSubject<Array<any>>(Array());
+  public defermentApplications = new BehaviorSubject<Array<any>>(Array());
+
   private teacherUrl = URL_CONFIG.teacherUrl;
   private subjectUrl = URL_CONFIG.subjectUrl;
   private teachersUrl = URL_CONFIG.teachersUrl;
+  private applicationUrl = URL_CONFIG.applicationUrl;
   private headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
 
   public get teachersValue() {
@@ -81,12 +88,15 @@ export class HeadService {
   getAllTeachers(): Observable<Array<Teacher>> {
     return this.http.get<Array<Teacher>>(this.teachersUrl);
   }
+
+
+
   getTeacherById(id: number): Observable<Teacher> {
     return this.http.get<Teacher>(`${this.teacherUrl}/${id}`);
   }
 
-  getAllSubjects(): Observable<Array<Subject>> {
-    return this.http.get<Array<Subject>>(`${this.subjectUrl}`);
+  getAllSubjects(): Observable<Array<Subj>> {
+    return this.http.get<Array<Subj>>(`${this.subjectUrl}`);
   }
 
   filterTeachers(filters: TeacherFilters) {
@@ -112,10 +122,22 @@ export class HeadService {
     return url;
   }
 
+  getApplications(type: string, status?: string, personnel_number?: number): Observable<Array<any>> {
+    let filterUrl = `${this.applicationUrl}/${type}?`;
+    if (status) {
+      filterUrl += `status=${status}`;
+    }
+    if (personnel_number) {
+      filterUrl += `&personnel_number=${personnel_number}`;
+    }
+    return this.http.get<Array<any>>(filterUrl);
+  }
+
   private loadInitialData() {
     this.getAllTeachers().subscribe(data => {
       this.teachers$.next(data);
     });
   }
+
 
 }

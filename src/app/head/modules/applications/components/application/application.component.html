@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="application">
+    <ul class="application__header application__header--right">
+      <li>{{referrals}}</li>
+      <li>Типового положення</li>
+      <li>{{name}}</li>
+    </ul>
+    <ul class="application__header  application__header--left">
+      <li>Голові атестаційної комісії Київської</li>
+      <li>спеціалізованої школи №173</li>
+      <li>І-ІІІ ступенів</li>
+      <li>Мазаєвій Л. А.</li>
+    </ul>
+    <ul class="application__header  application__header--left">
+        <li>
+          {{application.teacher_position}}
+        </li>
+        <li>
+         {{application.teacher_pib}}
+        </li>
+      </ul>
+    <p class="application__header-title">Заява</p>
+    <p>
+      {{reason}}
+    </p>
+
+    <div class="application__footer fw">
+      <span>{{dateString}}</span>
+      <span class="application__sign"></span>
+    </div>
+    <div class="application__buttons-wrapper fw">
+      <button mat-raised-button color="primary" (click)="savePdf()">Зберегти Pdf</button>
+      <!-- <button mat-raised-button color="primary" (click)="saveApplication()">Надіслати заяву</button> -->
+    </div>
+  </div>
+
+
+</div>

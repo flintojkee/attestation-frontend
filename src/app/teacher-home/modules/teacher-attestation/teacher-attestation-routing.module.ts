@@ -13,6 +13,11 @@ const routes: Routes = [
       path: 'extra-application',
       component: ApplicationComponent,
       data: { type: ApplicationType.extra }
+    },
+    {
+      path: 'deferment-application',
+      component: ApplicationComponent,
+      data: { type: ApplicationType.deferment }
     }
 ];
 

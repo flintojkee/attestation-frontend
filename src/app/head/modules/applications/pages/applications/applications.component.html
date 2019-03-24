@@ -1,0 +1,52 @@
+<!-- <mat-accordion>
+  <mat-expansion-panel (opened)="extraApplicationsOpenState = true"
+                       (closed)="extraApplicationsOpenState = false"
+                       class="applications__applications">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Заяви на позачергову атестацію
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list *ngIf="extraApplicationsInProgres.length">
+      <mat-list-item *ngFor="let extraApplication of extraApplicationsInProgres">
+        <mat-icon [style.color]="getColor(extraApplication.extra_application_status)" mat-list-icon>{{getIcon(extraApplication.extra_application_status)}}</mat-icon>
+        <h3 mat-line><a>{{extraApplication.teacher_pib}}</a></h3>
+        <h4 mat-line>Дата: {{extraApplication.extra_application_date}}</h4>
+        <app-application [type]='extra' [application]="extraApplication"></app-application>
+      </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+  <mat-expansion-panel (opened)="extraApplicationsOpenState = true"
+                       (closed)="extraApplicationsOpenState = false"
+                       class="applications__applications">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Заяви на відтермінування
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-list *ngIf="defermentApplicationsInProgres.length">
+      <mat-list-item *ngFor="let defermentApplication of defermentApplicationsInProgres">
+        <mat-icon [style.color]="getColor(defermentApplication.deferment_application_status)" mat-list-icon>{{getIcon(defermentApplication.deferment_application_status)}}</mat-icon>
+        <h3 mat-line>{{defermentApplication.teacher_pib}}</h3>
+        <h4 mat-line>{{defermentApplication.deferment_application_date}}</h4>
+      </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+</mat-accordion> -->
+<mat-accordion *ngIf="extraApplicationsInProgres.length">
+  <mat-expansion-panel *ngFor="let extraApplication of extraApplicationsInProgres"
+                      (opened)="extraApplicationsOpenState = true"
+                       (closed)="extraApplicationsOpenState = false"
+                       class="applications__applications">
+    <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon [style.color]="getColor(extraApplication.extra_application_status)" mat-list-icon>{{getIcon(extraApplication.extra_application_status)}}</mat-icon>
+      {{extraApplication.teacher_pib}}
+    </mat-panel-title>
+    <mat-panel-description>
+        Дата: {{extraApplication.extra_application_date}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+      <app-application [type]="'extra'" [application]="extraApplication"></app-application>
+  </mat-expansion-panel>
+</mat-accordion>

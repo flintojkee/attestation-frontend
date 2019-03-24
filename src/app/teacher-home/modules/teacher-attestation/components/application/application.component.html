@@ -34,12 +34,27 @@
         >
       </textarea>
     </mat-form-field>
+    <mat-form-field *ngIf="isDeferment()">
+      <mat-label>Введіть кількість років</mat-label>
+      <input
+        min="1"
+        max="5"
+        type="number"
+        matInput
+        formControlName="years"
+        >
+    </mat-form-field>
+
+    <div class="application__footer fw">
+      <span>{{todayString}}</span>
+      <span class="application__sign"></span>
+    </div>
+    <div class="application__buttons-wrapper fw">
+      <button mat-raised-button color="primary" (click)="savePdf()">Зберегти Pdf</button>
+      <button mat-raised-button color="primary" (click)="saveApplication()">Надіслати заяву</button>
+    </div>
   </form>
-  <div class="application__footer fw">
-    <span>{{todayString}}</span>
-    <span class="application__sign"></span>
   </div>
-  </div>
-  <button mat-raised-button color="primary" (click)="savePdf()">Save Pdf</button>
-  <button mat-raised-button color="primary" (click)="saveApplication()">Save Application</button>
+
+
 </div>

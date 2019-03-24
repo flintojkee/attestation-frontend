@@ -1,25 +1,91 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TeacherAttestationService } from '../../shared/teacher-attestation.service';
 import { TeacherService } from '@atestattion/teacher-home/shared/teacher.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Teacher } from '@atestattion/shared/models/teacher';
+import { ApplicationStatus, ApplicationType } from '@atestattion/shared/models/application';
 
 @Component({
   selector: 'app-teacher-attestation',
   templateUrl: './teacher-attestation.component.html',
   styleUrls: ['./teacher-attestation.component.sass']
 })
-export class TeacherAttestationComponent implements OnInit {
+export class TeacherAttestationComponent implements OnInit, OnDestroy {
 
   constructor(
     private teacherAttestaionService: TeacherAttestationService,
     private teacherService: TeacherService
     ) { }
   teacher: Teacher;
+  teacherSubscription: Subscription;
+  extraApplications = [];
+  defermentApplications = [];
+  extraApplicationsOpenState = false;
   ngOnInit() {
-    this.teacherService.currentTeacher.subscribe(teacher => {
-      this.teacher = teacher;
-    });
+    if (this.teacherService.currentTeacher) {
+      this.teacherSubscription = this.teacherService.currentTeacher.subscribe(teacher => {
+        this.teacher = teacher;
+        this.teacherAttestaionService.getApplications(
+          ApplicationType.extra,
+          '',
+          this.teacher.personnel_number)
+          .subscribe(applications => {
+          this.extraApplications = applications;
+        });
+        this.teacherAttestaionService.getApplications(
+          ApplicationType.deferment,
+          '',
+          this.teacher.personnel_number)
+          .subscribe(applications => {
+          this.defermentApplications = applications;
+        });
+
+      });
+    } else {
+      this.teacherSubscription = this.teacherService.getTeacherProfile().subscribe(teacher => {
+        this.teacher = teacher;
+        this.teacherAttestaionService.getApplications(ApplicationType.extra,'', this.teacher.personnel_number).subscribe(applications => {
+          this.extraApplications = applications;
+        });
+        this.teacherAttestaionService.getApplications(
+          ApplicationType.deferment,
+          '',
+          this.teacher.personnel_number)
+          .subscribe(applications => {
+          this.defermentApplications = applications;
+        });
+      });
+    }
+
+  }
+
+  ngOnDestroy() {
+    this.teacherSubscription.unsubscribe();
+  }
+
+  getIcon(status: string): string {
+    switch (status) {
+      case 'confirmed':
+        return 'assignment_turned_in';
+      case 'rejected':
+        return 'assignment_late';
+      case 'in progress':
+        return 'assignment';
+      default:
+        break;
+    }
+  }
+  getColor(status: string): string {
+    switch (status) {
+      case 'confirmed':
+        return 'green';
+      case 'rejected':
+        return 'red';
+      case 'in progress':
+        return 'gray';
+      default:
+        break;
+    }
   }
 
 }

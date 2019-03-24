@@ -1,6 +1,6 @@
 export enum ApplicationType {
-  extra = 'extra-application',
-  deferment = 'deferment-application'
+  extra = 'extra',
+  deferment = 'deferment'
 }
 
 
