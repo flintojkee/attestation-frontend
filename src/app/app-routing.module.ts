@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './account/auth.guard';
 import { AccessLevel } from './shared/models/user';
-
 const routes: Routes = [
   {
     path: 'account',

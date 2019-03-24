@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { TeacherProfileRoutingModule } from './teacher-profile-routing.module';
 import { SharedModule } from '@atestattion/shared';
 import { TeacherProfileResolver } from '@atestattion/teacher-home/shared/teacher-profile.resolver';
-import { TeacherService } from '@atestattion/teacher-home/shared/teacher.service';
 
 @NgModule({
   declarations: [],
@@ -13,6 +12,6 @@ import { TeacherService } from '@atestattion/teacher-home/shared/teacher.service
     TeacherProfileRoutingModule,
     SharedModule
   ],
-  providers: [TeacherService, TeacherProfileResolver]
+  providers: [TeacherProfileResolver]
 })
 export class TeacherProfileModule { }

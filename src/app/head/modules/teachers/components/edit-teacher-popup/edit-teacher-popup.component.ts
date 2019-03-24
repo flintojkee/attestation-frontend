@@ -19,7 +19,6 @@ export class EditTeacherPopupComponent implements OnInit {
     private headService: HeadService,
     public dialogRef: MatDialogRef<EditTeacherPopupComponent>,
     private formBuilder: FormBuilder,
-    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Teacher
     ) { }
 
@@ -103,16 +102,6 @@ export class EditTeacherPopupComponent implements OnInit {
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
-      // Add our fruit
-      // if ((value || '').trim()) {
-      //    if (this.allSubjects.indexOf(value) > -1) {
-      //      this.subjects.push(value.trim());
-      //     } else {
-      //     value.trim();
-      //   }
-      // }
-
-      // Reset the input value
       if (input) {
         input.value = '';
       }

@@ -1,7 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { TeacherAttestationComponent } from './pages/teacher-attestation/teacher-attestation.component';
+import { ApplicationComponent } from './components/application/application.component';
+import { ApplicationType } from '@atestattion/shared/models/application';
 
-const routes: Routes = [];
+const routes: Routes = [
+    {
+      path: '',
+      component: TeacherAttestationComponent
+    },
+    {
+      path: 'extra-application',
+      component: ApplicationComponent,
+      data: { type: ApplicationType.extra }
+    }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

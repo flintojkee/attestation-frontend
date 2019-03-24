@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="application">
+    <ul class="application__header application__header--right">
+      <li>{{application.referrals}}</li>
+      <li>Типового положення</li>
+      <li>{{application.name}}</li>
+    </ul>
+    <ul class="application__header  application__header--left">
+      <li>Голові атестаційної комісії Київської</li>
+      <li>спеціалізованої школи №173</li>
+      <li>І-ІІІ ступенів</li>
+      <li>Мазаєвій Л. А.</li>
+    </ul>
+    <form [formGroup]="applicationForm">
+    <ul class="application__header  application__header--left">
+        <li>
+          <mat-form-field>
+            <input matInput placeholder="Посада" formControlName="position">
+          </mat-form-field>
+        </li>
+        <li>
+          <mat-form-field>
+            <input matInput placeholder="ПІБ" formControlName="fullName">
+          </mat-form-field>
+        </li>
+      </ul>
+    <p class="application__header-title">Заява</p>
+    <mat-form-field class="application__input application__input--area">
+      <mat-label>Введіть текст заяви</mat-label>
+      <textarea
+        matInput
+        formControlName="applicationText"
+        rows="12"
+        >
+      </textarea>
+    </mat-form-field>
+  </form>
+  <div class="application__footer fw">
+    <span>{{todayString}}</span>
+    <span class="application__sign"></span>
+  </div>
+  </div>
+  <button mat-raised-button color="primary" (click)="savePdf()">Save Pdf</button>
+  <button mat-raised-button color="primary" (click)="saveApplication()">Save Application</button>
+</div>

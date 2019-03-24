@@ -7,5 +7,6 @@ export let URL_CONFIG = {
   teacherUrl: authBase + '/teacher',
   teacherProfileUrl: authBase + '/profile',
   teachersUrl: authBase + '/teachers',
-  subjectUrl: authBase + '/subject'
+  subjectUrl: authBase + '/subject',
+  applicationUrl: authBase + '/application'
 };

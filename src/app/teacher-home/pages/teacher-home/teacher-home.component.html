@@ -1,6 +1,6 @@
-<div class="head-home">
+<div class="teacher-home">
   <div class="container">
-    <mat-drawer-container class="head-home__body">
+    <mat-drawer-container class="teacher-home__body">
       <mat-drawer mode="side" opened>
         <mat-button-toggle-group [(ngModel)]="toggleValue" name="menu" aria-label="Menu" vertical="true">
           <mat-button-toggle [routerLink]="'profile'" value="teachers">Профіль</mat-button-toggle>
@@ -9,7 +9,7 @@
           <mat-button-toggle value="appeal">Апеляція</mat-button-toggle>
         </mat-button-toggle-group>
       </mat-drawer>
-      <mat-drawer-content class="head-home__content">
+      <mat-drawer-content class="teacher-home__content">
         <router-outlet></router-outlet>
       </mat-drawer-content>
   </mat-drawer-container>
