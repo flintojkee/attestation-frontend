@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Teacher, TeacherFilters, Category, Rank } from '../../shared/models/teacher';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { Subject as Subj } from '@atestattion/shared/models/subject';
+import { ApplicationStatus } from '@atestattion/shared/models/application';
 
 @Injectable({
   providedIn: 'root',
@@ -89,8 +90,6 @@ export class HeadService {
     return this.http.get<Array<Teacher>>(this.teachersUrl);
   }
 
-
-
   getTeacherById(id: number): Observable<Teacher> {
     return this.http.get<Teacher>(`${this.teacherUrl}/${id}`);
   }
@@ -139,5 +138,9 @@ export class HeadService {
     });
   }
 
+  updateApplication(type: string, id: number, application: any) {
+    return this.http.put(`${this.applicationUrl}/${type}/${id}`, JSON.stringify(application),
+    {headers: this.headers, observe: 'response'});
+  }
 
 }

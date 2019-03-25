@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { ApplicationType} from '@atestattion/shared/models/application';
+import { ApplicationType, ApplicationStatus} from '@atestattion/shared/models/application';
+import { HeadService } from '@atestattion/head/shared/head.service';
 
 @Component({
   selector: 'app-application',
@@ -16,30 +17,103 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   reason: string;
   name: string;
   referrals: string;
-
-  constructor() { }
+  id: number;
+  constructor(private headService: HeadService) { }
   teacherPersonnelNumber: number;
 
   ngOnInit() {
-    debugger
     switch (this.type) {
       case ApplicationType.deferment:
         this.reason = this.application.deferment_application_reason;
         this.dateString = this.application.deferment_application_date;
         this.referrals = 'До пунктів 3.1 та 3.15';
         this.name = 'Заява про відтермінування чергової атестації';
+
         break;
       case ApplicationType.extra:
         this.reason = this.application.extra_application_reason;
         this.dateString = this.application.extra_application_date;
         this.referrals = 'До пунктів 1.8 та 3.1';
         this.name = 'Заява про позачергову атестацію';
+
         return ;
     }
   }
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  rejectApplication() {
+    switch (this.type) {
+      case ApplicationType.deferment:
+        this.application.deferment_application_status = ApplicationStatus.REJECTED;
+        this.id = this.application.deferment_application_number;
+        break;
+      case ApplicationType.extra:
+        this.application.extra_application_status = ApplicationStatus.REJECTED;
+        this.id = this.application.extra_application_number;
+        break ;
+    }
+    this.headService.updateApplication(this.type, this.id, this.application).subscribe(res => {
+      let index = -1;
+      if (res.status === 200) {
+        switch (this.type) {
+          case ApplicationType.deferment:
+          index = this.headService.defermentApplications.value
+                        .findIndex(el => el.deferment_application_number === this.application.deferment_application_number);
+          if (index > -1) {
+            this.headService.defermentApplications[index] = this.application;
+            this.headService.defermentApplications.next(this.headService.defermentApplications.value);
+          }
+            break;
+          case ApplicationType.extra:
+          index = this.headService.extraApplications.value
+                        .findIndex(el => el.extra_application_number === this.application.extra_application_number);
+          if (index > -1) {
+            this.headService.extraApplications[index] = this.application;
+            this.headService.extraApplications.next(this.headService.extraApplications.value);
+          }
+            break ;
+        }
+      }
+    });
+  }
+
+  confirmApplication() {
+    switch (this.type) {
+      case ApplicationType.deferment:
+        this.application.deferment_application_status = ApplicationStatus.CONFIRMED;
+        this.id = this.application.deferment_application_number;
+        break;
+      case ApplicationType.extra:
+        this.application.extra_application_status = ApplicationStatus.CONFIRMED;
+        this.id = this.application.extra_application_number;
+        break ;
+    }
+    this.headService.updateApplication(this.type, this.id, this.application).subscribe(res => {
+      let index = -1;
+      if (res.status === 200) {
+        switch (this.type) {
+          case ApplicationType.deferment:
+          index = this.headService.defermentApplications.value
+                        .findIndex(el => el.deferment_application_number === this.application.deferment_application_number);
+          if (index > -1) {
+            this.headService.defermentApplications[index] = this.application;
+            this.headService.defermentApplications.next(this.headService.defermentApplications.value);
+          }
+            break;
+          case ApplicationType.extra:
+          index = this.headService.extraApplications.value
+                        .findIndex(el => el.extra_application_number === this.application.extra_application_number);
+          if (index > -1) {
+            this.headService.extraApplications[index] = this.application;
+            this.headService.extraApplications.next(this.headService.extraApplications.value);
+          }
+            break ;
+        }
+      }
+    });
   }
 
   isDeferment() {

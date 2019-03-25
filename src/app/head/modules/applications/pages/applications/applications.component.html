@@ -33,20 +33,88 @@
     </mat-list>
   </mat-expansion-panel>
 </mat-accordion> -->
-<mat-accordion *ngIf="extraApplicationsInProgres.length">
-  <mat-expansion-panel *ngFor="let extraApplication of extraApplicationsInProgres"
-                      (opened)="extraApplicationsOpenState = true"
-                       (closed)="extraApplicationsOpenState = false"
-                       class="applications__applications">
-    <mat-expansion-panel-header>
-    <mat-panel-title>
-      <mat-icon [style.color]="getColor(extraApplication.extra_application_status)" mat-list-icon>{{getIcon(extraApplication.extra_application_status)}}</mat-icon>
-      {{extraApplication.teacher_pib}}
-    </mat-panel-title>
-    <mat-panel-description>
-        Дата: {{extraApplication.extra_application_date}}
-    </mat-panel-description>
-  </mat-expansion-panel-header>
-      <app-application [type]="'extra'" [application]="extraApplication"></app-application>
-  </mat-expansion-panel>
-</mat-accordion>
+<div class="container">
+<div class="applications__section">
+  <h2 class="applications__section-header">Заяви на позачергову атестацію</h2>
+  <mat-accordion *ngIf="extraApplicationsInProgres.length">
+    <mat-expansion-panel *ngFor="let extraApplication of extraApplicationsInProgres"
+                        (opened)="extraApplicationsOpenState = true"
+                         (closed)="extraApplicationsOpenState = false"
+                         class="applications__applications">
+      <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon [style.color]="getColor(extraApplication.extra_application_status)" mat-list-icon>{{getIcon(extraApplication.extra_application_status)}}</mat-icon>
+        {{extraApplication.teacher_pib}}
+      </mat-panel-title>
+      <mat-panel-description>
+          Дата: {{extraApplication.extra_application_date}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+        <app-application [type]="'extra'" [application]="extraApplication"></app-application>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div class="applications__section">
+    <h2 class="applications__section-header">Заяви на відтермінування атестації</h2>
+    <mat-accordion *ngIf="defermentApplicationsInProgres.length">
+        <mat-expansion-panel *ngFor="let defermentApplication of defermentApplicationsInProgres"
+                            (opened)="defermentApplicationsOpenState = true"
+                             (closed)="defermentApplicationsOpenState = false"
+                             class="applications__applications">
+          <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon [style.color]="getColor(defermentApplication.deferment_application_status)" mat-list-icon>{{getIcon(defermentApplication.deferment_application_status)}}</mat-icon>
+            {{defermentApplication.teacher_pib}}
+          </mat-panel-title>
+          <mat-panel-description>
+              Дата: {{defermentApplication.deferment_application_date}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+            <app-application [type]="'deferment'" [application]="defermentApplication"></app-application>
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>
+<div class="applications__section">
+    <h2 class="applications__section-header">Заяви на позачергову атестацію (історія)</h2>
+    <mat-accordion *ngIf="extraApplications.length">
+        <mat-expansion-panel *ngFor="let extraApplication of extraApplications"
+                            (opened)="extraApplicationsOpenState = true"
+                             (closed)="extraApplicationsOpenState = false"
+                             class="applications__applications">
+          <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon [style.color]="getColor(extraApplication.extra_application_status)" mat-list-icon>{{getIcon(extraApplication.extra_application_status)}}</mat-icon>
+            {{extraApplication.teacher_pib}}
+          </mat-panel-title>
+          <mat-panel-description>
+              Дата: {{extraApplication.extra_application_date}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+            <app-application [type]="'extra'" [application]="extraApplication"></app-application>
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>
+
+<div class="applications__section">
+    <h2 class="applications__section-header">Заяви на відтермінування атестації (історія)</h2>
+    <mat-accordion *ngIf="defermentApplications.length">
+        <mat-expansion-panel *ngFor="let defermentApplication of defermentApplications"
+                            (opened)="defermentApplicationsOpenState = true"
+                             (closed)="defermentApplicationsOpenState = false"
+                             class="applications__applications">
+          <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon [style.color]="getColor(defermentApplication.deferment_application_status)" mat-list-icon>{{getIcon(defermentApplication.deferment_application_status)}}</mat-icon>
+            {{defermentApplication.teacher_pib}}
+          </mat-panel-title>
+          <mat-panel-description>
+              Дата: {{defermentApplication.deferment_application_date}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+            <app-application [type]="'deferment'" [application]="defermentApplication"></app-application>
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>
+
+</div>

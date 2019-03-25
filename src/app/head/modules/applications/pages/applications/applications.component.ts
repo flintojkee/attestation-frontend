@@ -12,17 +12,20 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
   extraApplicationsInProgres = [];
   defermentApplications$: Subscription;
   defermentApplicationsInProgres = [];
+  extraApplications = [];
+  defermentApplications = [];
 
 
   constructor(private headService: HeadService) { }
 
   ngOnInit() {
     this.extraApplications$ = this.headService.extraApplications.subscribe(applications => {
+      this.extraApplications = applications.filter(obj => obj.extra_application_status !== 'in progress');
       this.extraApplicationsInProgres = applications.filter(obj => obj.extra_application_status === 'in progress');
     });
     this.defermentApplications$ = this.headService.defermentApplications.subscribe(applications => {
       this.defermentApplicationsInProgres = applications.filter(obj => obj.deferment_application_status === 'in progress');
-
+      this.defermentApplications = applications.filter(obj => obj.deferment_application_status !== 'in progress');
     });
   }
   ngOnDestroy() {
