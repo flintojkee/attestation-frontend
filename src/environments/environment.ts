@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://attestation-backend.herokuapp.com/api'
+  apiUrl: 'http://192.168.0.107:5000/api'
 };
 
 

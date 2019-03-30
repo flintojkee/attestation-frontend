@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HeadService } from '@atestattion/head/shared/head.service';
 import { Subscription } from 'rxjs';
 import { ApplicationType } from '@atestattion/shared/models/application';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-head-home',
@@ -18,7 +19,10 @@ export class HeadHomeComponent implements OnInit, OnDestroy {
   defermentApplications$: Subscription;
   defermentApplicationsInProgres = [];
 
-  constructor(private headService: HeadService) { }
+  constructor(
+    private headService: HeadService,
+    private spinner: NgxSpinnerService
+    ) { }
 
   ngOnInit() {
     this.extraApplicationsSubscription = this.headService.getApplications(ApplicationType.extra).subscribe(
@@ -27,7 +31,7 @@ export class HeadHomeComponent implements OnInit, OnDestroy {
      }
     );
     this.extraApplications$ = this.headService.extraApplications.subscribe(applications => {
-      this.extraApplicationsInProgres = applications.filter(obj => obj.extra_application_status === 'in progress');
+      this.extraApplicationsInProgres = applications.filter(obj => obj.extra_application_status === 'на розгляді');
     });
 
     this.defermentApplicationsSubscription = this.headService.getApplications(ApplicationType.deferment).subscribe(
@@ -36,7 +40,7 @@ export class HeadHomeComponent implements OnInit, OnDestroy {
       }
      );
     this.defermentApplications$ = this.headService.defermentApplications.subscribe(applications => {
-      this.defermentApplicationsInProgres = applications.filter(obj => obj.deferment_application_status === 'in progress');
+      this.defermentApplicationsInProgres = applications.filter(obj => obj.deferment_application_status === 'на розгляді');
 
     });
   }

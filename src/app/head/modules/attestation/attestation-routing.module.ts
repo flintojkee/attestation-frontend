@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AttestationComponent } from './attestation/attestation.component';
+import { AttestationComponent } from './pages/attestation.component';
 
 const routes: Routes = [
   {

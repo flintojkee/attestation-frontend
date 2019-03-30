@@ -24,6 +24,7 @@ import { MatButtonModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherComponent } from './components/teacher/teacher.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [TeacherComponent],
   imports: [
@@ -50,7 +51,8 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     MatChipsModule,
     MatExpansionModule,
     MatBadgeModule,
-    MatTreeModule
+    MatTreeModule,
+    NgxSpinnerModule
 
   ],
   exports: [
@@ -77,7 +79,8 @@ import { TeacherComponent } from './components/teacher/teacher.component';
     MatChipsModule,
     MatExpansionModule,
     MatBadgeModule,
-    MatTreeModule
+    MatTreeModule,
+    NgxSpinnerModule
 
   ]
 })

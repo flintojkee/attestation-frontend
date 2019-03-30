@@ -20,6 +20,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
   id: number;
   constructor(private headService: HeadService) { }
   teacherPersonnelNumber: number;
+  inProgress: boolean;
+  rejected: boolean;
 
   ngOnInit() {
     switch (this.type) {
@@ -28,14 +30,16 @@ export class ApplicationComponent implements OnInit, OnDestroy {
         this.dateString = this.application.deferment_application_date;
         this.referrals = 'До пунктів 3.1 та 3.15';
         this.name = 'Заява про відтермінування чергової атестації';
-
+        this.inProgress = this.application.deferment_application_status === 'на розгляді' ? true : false;
+        this.rejected = this.application.deferment_application_status === 'відхилено' ? true : false;
         break;
       case ApplicationType.extra:
         this.reason = this.application.extra_application_reason;
         this.dateString = this.application.extra_application_date;
         this.referrals = 'До пунктів 1.8 та 3.1';
         this.name = 'Заява про позачергову атестацію';
-
+        this.inProgress = this.application.deferment_application_status === 'на розгляді' ? true : false;
+        this.rejected = this.application.deferment_application_status === 'відхилено' ? true : false;
         return ;
     }
   }

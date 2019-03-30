@@ -99,7 +99,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
           deferment_application_reason: this.applicationForm.controls.applicationText.value,
           deferment_application_status: ApplicationStatus.IN_PROGRESS,
           personnel_number: this.teacherPersonnelNumber,
-          deferment_application_years: 1,
+          deferment_application_years: this.applicationForm.controls.years.value,
           referrals: '',
           name: '',
           teacher_position: this.applicationForm.controls.position.value,

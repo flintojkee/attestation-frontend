@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { HeadService } from '@atestattion/head/shared/head.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-applications',
@@ -16,16 +17,21 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
   defermentApplications = [];
 
 
-  constructor(private headService: HeadService) { }
+  constructor(
+    private headService: HeadService,
+    private spinner: NgxSpinnerService
+    ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.extraApplications$ = this.headService.extraApplications.subscribe(applications => {
-      this.extraApplications = applications.filter(obj => obj.extra_application_status !== 'in progress');
-      this.extraApplicationsInProgres = applications.filter(obj => obj.extra_application_status === 'in progress');
+      this.extraApplications = applications.filter(obj => obj.extra_application_status !== 'на розгляді');
+      this.extraApplicationsInProgres = applications.filter(obj => obj.extra_application_status === 'на розгляді');
+      this.spinner.hide();
     });
     this.defermentApplications$ = this.headService.defermentApplications.subscribe(applications => {
-      this.defermentApplicationsInProgres = applications.filter(obj => obj.deferment_application_status === 'in progress');
-      this.defermentApplications = applications.filter(obj => obj.deferment_application_status !== 'in progress');
+      this.defermentApplicationsInProgres = applications.filter(obj => obj.deferment_application_status === 'на розгляді');
+      this.defermentApplications = applications.filter(obj => obj.deferment_application_status !== 'на розгляді');
     });
   }
   ngOnDestroy() {
@@ -35,11 +41,11 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
 
   getIcon(status: string): string {
     switch (status) {
-      case 'confirmed':
+      case 'підтверджено':
         return 'assignment_turned_in';
-      case 'rejected':
+      case 'відхилено':
         return 'assignment_late';
-      case 'in progress':
+      case 'на розгляді':
         return 'assignment';
       default:
         break;
@@ -47,11 +53,11 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
   }
   getColor(status: string): string {
     switch (status) {
-      case 'confirmed':
+      case 'підтверджено':
         return 'green';
-      case 'rejected':
+      case 'відхилено':
         return 'red';
-      case 'in progress':
+      case 'на розгляді':
         return 'gray';
       default:
         break;

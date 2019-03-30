@@ -4,7 +4,7 @@ import { AnalyticsService } from '../../shared/analytics.service';
 @Component({
   selector: 'app-analitycs',
   templateUrl: './analitycs.component.html',
-  styleUrls: ['./analitycs.component.scss']
+  styleUrls: ['./analitycs.component.sass']
 })
 export class AnalitycsComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class AnalitycsComponent implements OnInit {
     });
   }
   downloadFile(data: any) {
-    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;' });
+    const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const url = window.URL.createObjectURL(blob);
     window.open(url);
   }

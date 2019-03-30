@@ -7,6 +7,7 @@ import { Teacher, TeacherFilters, Category, Rank } from '../../shared/models/tea
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { Subject as Subj } from '@atestattion/shared/models/subject';
 import { ApplicationStatus } from '@atestattion/shared/models/application';
+import { Attestation } from '@atestattion/shared/models/attestation';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class HeadService {
   private subjectUrl = URL_CONFIG.subjectUrl;
   private teachersUrl = URL_CONFIG.teachersUrl;
   private applicationUrl = URL_CONFIG.applicationUrl;
+  private attestationUrl = URL_CONFIG.attestationUrl;
   private headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
 
   public get teachersValue() {
@@ -141,6 +143,23 @@ export class HeadService {
   updateApplication(type: string, id: number, application: any) {
     return this.http.put(`${this.applicationUrl}/${type}/${id}`, JSON.stringify(application),
     {headers: this.headers, observe: 'response'});
+  }
+
+  saveAttestation(atestattion: Attestation): any {
+    this.createAttestation(atestattion).subscribe(res => {
+      if (res.status === 200) {
+        const index = this.teachers$Value.findIndex(el => el.personnel_number === atestattion.personnel_number);
+        if (index > -1) {
+          this.teachers$Value[index].qualification_category = atestattion.on_category;
+          this.teachers$Value[index].rank = atestattion.on_rank;
+          this.teachers$.next(this.teachers$Value);
+        }
+      }
+    });
+  }
+
+  private createAttestation(attestation: Attestation) {
+    return this.http.post(this.attestationUrl, JSON.stringify(attestation), {headers: this.headers, observe: 'response'});
   }
 
 }

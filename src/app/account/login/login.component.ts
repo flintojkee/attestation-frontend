@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AccessLevel } from '@atestattion/shared/models/user';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private router: Router,
-      private authService: AuthService
+      private authService: AuthService,
+      private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit() {
@@ -38,13 +40,12 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   login() {
-    this.submitted = true;
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
         return;
     }
-
+    this.spinner.show();
     this.loading = true;
     this.authService.login(this.f.login.value, this.f.password.value)
         .pipe(first())
@@ -64,7 +65,7 @@ export class LoginComponent implements OnInit {
             },
             error => {
                 this.error = error;
-                this.loading = false;
+                this.spinner.hide();
             });
   }
 }

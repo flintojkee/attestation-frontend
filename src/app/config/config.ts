@@ -9,5 +9,6 @@ export let URL_CONFIG = {
   teachersUrl: authBase + '/teachers',
   subjectUrl: authBase + '/subject',
   applicationUrl: authBase + '/application',
-  analyticsUrl: authBase + '/analytics'
+  analyticsUrl: authBase + '/analytics',
+  attestationUrl: authBase + '/attestation'
 };

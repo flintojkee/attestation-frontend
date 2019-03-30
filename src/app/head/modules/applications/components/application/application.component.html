@@ -23,17 +23,20 @@
     <p>
       {{reason}}
     </p>
-
+    <br>
     <div class="application__footer fw">
       <span>{{dateString}}</span>
       <span class="application__sign"></span>
     </div>
     <div class="application__buttons-wrapper fw">
-      <button mat-raised-button color="primary" (click)="savePdf()">Зберегти Pdf</button>
-      <button mat-raised-button color="primary" (click)="confirmApplication()">Підтвердити заяву</button>
-      <button mat-raised-button color="warn" (click)="rejectApplication()">Відхилити заяву</button>
+      <button *ngIf="!rejected" mat-raised-button color="primary" (click)="savePdf()">Зберегти Pdf</button>
+      <button *ngIf="!rejected" mat-raised-button color="primary" (click)="confirmApplication()">Підтвердити заяву</button>
+      <button *ngIf="!rejected" mat-raised-button color="warn" (click)="rejectApplication()">Відхилити заяву</button>
     </div>
   </div>
 
 
 </div>
+
+
+

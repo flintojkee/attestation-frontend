@@ -44,7 +44,7 @@ export class TeacherAttestationComponent implements OnInit, OnDestroy {
     } else {
       this.teacherSubscription = this.teacherService.getTeacherProfile().subscribe(teacher => {
         this.teacher = teacher;
-        this.teacherAttestaionService.getApplications(ApplicationType.extra,'', this.teacher.personnel_number).subscribe(applications => {
+        this.teacherAttestaionService.getApplications(ApplicationType.extra, '', this.teacher.personnel_number).subscribe(applications => {
           this.extraApplications = applications;
         });
         this.teacherAttestaionService.getApplications(
@@ -65,11 +65,11 @@ export class TeacherAttestationComponent implements OnInit, OnDestroy {
 
   getIcon(status: string): string {
     switch (status) {
-      case 'confirmed':
+      case 'підтверджено':
         return 'assignment_turned_in';
-      case 'rejected':
+      case 'відхилено':
         return 'assignment_late';
-      case 'in progress':
+      case 'на розгляді':
         return 'assignment';
       default:
         break;
@@ -77,11 +77,11 @@ export class TeacherAttestationComponent implements OnInit, OnDestroy {
   }
   getColor(status: string): string {
     switch (status) {
-      case 'confirmed':
+      case 'підтверджено':
         return 'green';
-      case 'rejected':
+      case 'відхилено':
         return 'red';
-      case 'in progress':
+      case 'на розгляді':
         return 'gray';
       default:
         break;
