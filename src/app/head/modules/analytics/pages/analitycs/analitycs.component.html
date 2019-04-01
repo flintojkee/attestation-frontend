@@ -1,5 +1,15 @@
 <div class="container">
   <h2 class="analytics__header">Аналітика</h2>
+  <h3>Вчителі що атестуються в поточному році</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let teacher of teachersAttestation | async">
+      <img [src]="teacher.avatar_url" matListIcon>
+      <h3 matLine> {{teacher.surname}} {{teacher.name}} </h3>
+      <p matLine>
+        <span> {{teacher.subject}} </span>
+      </p>
+    </mat-list-item>
+  </mat-list>
   <button mat-raised-button color="primary" (click)="downloadExcel()">downloadExcel</button>
 </div>
 

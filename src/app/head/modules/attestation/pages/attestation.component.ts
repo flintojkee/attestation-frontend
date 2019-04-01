@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { AddAttestationPopupComponent } from '../components/add-attestation-popup/add-attestation-popup.component';
+import { AnalyticsService } from '../../analytics/shared/analytics.service';
 
 @Component({
   selector: 'app-attestation',
@@ -9,7 +10,9 @@ import { AddAttestationPopupComponent } from '../components/add-attestation-popu
 })
 export class AttestationComponent implements OnInit {
 
-  constructor( public popup: MatDialog) { }
+  constructor(
+    public popup: MatDialog
+    ) { }
 
   ngOnInit() {
   }

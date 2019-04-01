@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URL_CONFIG } from '@atestattion/config/config';
 import { Observable } from 'rxjs';
+import { Teacher } from '@atestattion/shared/models/teacher';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +17,12 @@ export class AnalyticsService {
 
   downloadExcel(): Observable<Blob> {
     return this.http.get(this.analyticsUrl + '/plan/download', { responseType: 'blob' });
+  }
+
+  getTeachersCurrentYearAttestation(): Observable<Teacher[]> {
+    return this.http.get<Array<Teacher>>(this.analyticsUrl + '/current_year_attestation').pipe(
+      map(teachers => {
+        return teachers;
+      }));
   }
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AnalyticsService } from '../../shared/analytics.service';
+import { Observable, of } from 'rxjs';
+import { Teacher } from '@atestattion/shared/models/teacher';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-analitycs',
@@ -9,8 +12,9 @@ import { AnalyticsService } from '../../shared/analytics.service';
 export class AnalitycsComponent implements OnInit {
 
   constructor(private analyticsService: AnalyticsService) { }
-
+  teachersAttestation: Observable<Array<Teacher>>;
   ngOnInit() {
+    this.teachersAttestation = this.analyticsService.getTeachersCurrentYearAttestation();
   }
   downloadExcel() {
     this.analyticsService.downloadExcel().subscribe(data => {
