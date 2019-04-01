@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { ApplicationType, ApplicationStatus } from '@atestattion/shared/models/application';
 import { ExtraApplication } from '@atestattion/shared/models/extra-application';
@@ -28,7 +28,8 @@ export class ApplicationComponent implements OnInit, OnDestroy {
     private teacherAttestaionService: TeacherAttestationService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private teacherService: TeacherService
+    private teacherService: TeacherService,
+    private router: Router,
   ) { }
   teacherPersonnelNumber: number;
 
@@ -110,6 +111,7 @@ export class ApplicationComponent implements OnInit, OnDestroy {
       default:
         break;
     }
+    this.router.navigate(['/teacher/attestation']);
 
   }
 

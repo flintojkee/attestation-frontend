@@ -41,7 +41,7 @@ export class HeadService {
   addTeacher(teacher: Teacher) {
     console.log(teacher);
     this.createTeacher(teacher).subscribe(res => {
-     if (res.status === 201) {
+     if (res.status === 202 || res.status === 200 || res.status === 201) {
         teacher.qualification_category = Category[teacher.qualification_category];
         teacher.rank = Rank[teacher.rank];
         this.teachers$Value.push(teacher);

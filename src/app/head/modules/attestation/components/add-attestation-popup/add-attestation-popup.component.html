@@ -31,12 +31,12 @@
           </div>
           <mat-form-field class="add-attestation__form-input col-2">
               <input matInput
-                    placeholder="Прізвище"
+                    placeholder="Посилання на атеційний лист"
                     formControlName="attestation_letter">
             </mat-form-field>
             <mat-form-field class="add-attestation__form-input col-2">
               <input matInput
-                    placeholder="Ім'я"
+                    placeholder="Посилання на характеристику"
                     formControlName="characteristic">
             </mat-form-field>
         </div>
@@ -51,33 +51,33 @@
                 <input readonly matInput [formControl]="previousRank" placeholder="Попереднє звання">
               </mat-form-field>
         </div>
-      <div class="add-attestation__inputs-wrapper fw">
-          <div class="add-attestation__icon-wrapper">
-              <mat-icon class="add-attestation__icon">collections_bookmark</mat-icon>
-            </div>
-            <mat-form-field class="add-attestation__form-input col-2">
-                <mat-select [formControlName]="'category_conclusion'" placeholder="Оберіть категорію">
-                  <mat-option *ngFor="let category of categoryOptions" [value]="category.value">{{category.option}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="add-attestation__form-input col-2">
-                <mat-select [formControlName]="'rank_conclusion'" placeholder="Оберіть звання">
-                    <mat-option>Немає</mat-option>
-                    <mat-option *ngFor="let rank of rankOptions" [value]="rank.value">{{rank.option}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-        </div>
         <div class="add-attestation__inputs-wrapper fw">
             <div class="add-attestation__icon-wrapper">
                 <mat-icon class="add-attestation__icon">collections_bookmark</mat-icon>
               </div>
               <mat-form-field class="add-attestation__form-input col-2">
-                  <mat-select [formControlName]="'on_category'" placeholder="Оберіть категорію">
+                  <mat-select [formControlName]="'on_category'" placeholder="На категорію">
                     <mat-option *ngFor="let category of categoryOptions" [value]="category.value">{{category.option}}</mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="add-attestation__form-input col-2">
-                  <mat-select [formControlName]="'on_rank'" placeholder="Оберіть звання">
+                  <mat-select [formControlName]="'on_rank'" placeholder="На звання">
+                      <mat-option>Немає</mat-option>
+                      <mat-option *ngFor="let rank of rankOptions" [value]="rank.value">{{rank.option}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+          </div>
+          <div class="add-attestation__inputs-wrapper fw">
+            <div class="add-attestation__icon-wrapper">
+                <mat-icon class="add-attestation__icon">collections_bookmark</mat-icon>
+              </div>
+              <mat-form-field class="add-attestation__form-input col-2">
+                  <mat-select [formControlName]="'category_conclusion'" placeholder="Рішення категорії">
+                    <mat-option *ngFor="let category of categoryOptions" [value]="category.value">{{category.option}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="add-attestation__form-input col-2">
+                  <mat-select [formControlName]="'rank_conclusion'" placeholder="Рішення звання">
                       <mat-option>Немає</mat-option>
                       <mat-option *ngFor="let rank of rankOptions" [value]="rank.value">{{rank.option}}</mat-option>
                   </mat-select>

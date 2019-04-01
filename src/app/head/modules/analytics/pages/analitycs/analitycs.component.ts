@@ -13,11 +13,14 @@ export class AnalitycsComponent implements OnInit {
 
   constructor(private analyticsService: AnalyticsService) { }
   teachersAttestation: Observable<Array<Teacher>>;
+  fileUrl: string;
   ngOnInit() {
+    this.fileUrl = 'https://attestation-backend.herokuapp.com/api/analytics/plan/download'
     this.teachersAttestation = this.analyticsService.getTeachersCurrentYearAttestation();
   }
   downloadExcel() {
     this.analyticsService.downloadExcel().subscribe(data => {
+      console.log(data);
       this.downloadFile(data);
     });
   }

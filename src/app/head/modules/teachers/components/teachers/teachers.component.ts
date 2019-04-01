@@ -46,7 +46,9 @@ export class TeachersComponent implements OnInit {
 
 
   deleteTeacher(id: number) {
-    this.headService.removeTeacher(id);
+    if (confirm('Ви впевнені, що бажаєте видалити вчителя?')) {
+      this.headService.removeTeacher(id);
+    }
   }
 
   filterTeachers() {

@@ -30,12 +30,14 @@
     <div matLine>
       <p *ngIf="teacher.rank">Звання: {{teacher.rank}}</p>
       <p>Категорія: {{teacher.qualification_category}}</p>
-      <ng-template [ngIf]="teacher.subjects.length === 1" [ngIfElse]="subjectsArr">
+      <ng-container *ngIf="teacher.subjects.length > 0">
+        <ng-template [ngIf]="teacher.subjects.length === 1" [ngIfElse]="subjectsArr">
           <p>Предмет: {{getTeacherSubjects(teacher.subjects)}}</p>
         </ng-template>
         <ng-template #subjectsArr>
           <p>Предмети: {{getTeacherSubjects(teacher.subjects)}}</p>
         </ng-template>
+      </ng-container>
     </div>
     <button (click)="openEditTeacherPopup(teacher.personnel_number)" class="teachers__edit-teacher-button" mat-mini-fab>
       <mat-icon>edit</mat-icon>
