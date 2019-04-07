@@ -59,15 +59,15 @@
           </ul>
         </div>
       </div>
-      <div *ngIf="teacher.referral_number === null" class="teacher__block">
+      <div  *ngIf="teacher.referral_number !== null || teacher.referral_number === null" class="teacher__block">
         <h4 class="teacher__block-header">Курси
-          <button  mat-icon-button color="primary">
+          <button  (click)="openAddCoursesPopup()" mat-icon-button color="primary">
             <mat-icon>note_add</mat-icon>
           </button>
-          <button  mat-icon-button color="warn">
+          <button *ngIf="teacher.proff_course_start_date" mat-icon-button color="warn">
             <mat-icon>delete</mat-icon>
           </button>
-          <button  mat-icon-button color="accent">
+          <button *ngIf="teacher.proff_course_start_date" (click)="openEditCoursesPopup()"  mat-icon-button color="accent">
             <mat-icon>edit</mat-icon>
           </button>
         </h4>
@@ -75,6 +75,7 @@
           <ul class="teacher__list">
             <li ><strong>Початок фахового курсу: {{teacher.proff_course_start_date}}</strong></li>
             <li ><strong>Кінець фахового курсу: {{teacher.proff_course_end_date}}</strong></li>
+            <br>
             <li *ngFor="let selectiveCourse of teacher.selective_courses">Дата вибіркового курсу: {{selectiveCourse.date_of_course}}</li>
           </ul>
         </div>

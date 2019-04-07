@@ -35,7 +35,7 @@
   </div>
 </div>
 <br />
-<div>
+<div *ngIf="events$ | async; else loading; let events">
   <mwl-calendar-month-view
 
     [viewDate]="viewDate"
@@ -47,3 +47,10 @@
     [excludeDays]="excludeDays"
   ></mwl-calendar-month-view>
 </div>
+
+<ng-template #loading>
+  <div style="margin: 0 auto">
+    <mat-spinner></mat-spinner>
+    Завантаження курсів...
+  </div>
+</ng-template>

@@ -25,6 +25,7 @@ export class Teacher {
   referral_number?: number;
   proff_course_start_date?: number;
   proff_course_end_date?: number;
+  sertificate?: boolean;
 }
 
 export enum Category {

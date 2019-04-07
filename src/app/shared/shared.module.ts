@@ -25,8 +25,10 @@ import { MatButtonModule,
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TeacherComponent } from './components/teacher/teacher.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { AddCoursePopupComponent } from '@atestattion/head/modules/courses/add-course-popup/add-course-popup.component';
+import { EditCoursePopupComponent } from '@atestattion/head/modules/courses/edit-course-popup/edit-course-popup.component';
 @NgModule({
-  declarations: [TeacherComponent],
+  declarations: [TeacherComponent, AddCoursePopupComponent, EditCoursePopupComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -80,8 +82,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatExpansionModule,
     MatBadgeModule,
     MatTreeModule,
-    NgxSpinnerModule
-
-  ]
+    NgxSpinnerModule,
+    AddCoursePopupComponent,
+    EditCoursePopupComponent
+  ],
+  entryComponents: [AddCoursePopupComponent, EditCoursePopupComponent]
 })
 export class SharedModule { }

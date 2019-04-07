@@ -68,7 +68,7 @@ export class AddAttestationPopupComponent implements OnInit, OnDestroy {
     return this.teachers.filter(option => option.surname.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  setCatecoryRankValues(){
+  setCatecoryRankValues() {
 
   }
 

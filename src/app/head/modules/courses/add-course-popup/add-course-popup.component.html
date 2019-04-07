@@ -1,0 +1,48 @@
+<div class="add-course">
+    <h1 mat-dialog-title class="add-course__header">Створити курс</h1>
+    <form [formGroup]="courseForm" (ngSubmit)="saveCourse()">
+
+    <mat-dialog-content class="add-course__form" >
+        <div class="add-course__inputs-wrapper fw col-2">
+            <div class="add-course__icon-wrapper">
+                <mat-icon class="add-course__icon">calendar_today</mat-icon>
+              </div>
+              <mat-form-field class="add-course__form-input">
+                <input matInput type="number" placeholder="Номер фахового курсу" formControlName="referral_number">
+            </mat-form-field>
+            <mat-form-field class="add-course__form-input">
+                <input matInput min="2000-01-02" type="date" placeholder="Дата початку фахового курсу" formControlName="proff_course_start_date">
+            </mat-form-field>
+            <mat-form-field class="add-course__form-input">
+                <input matInput min="2000-01-02" type="date" placeholder="Дата кінця фахового курсу" formControlName="proff_course_end_date">
+            </mat-form-field>
+        </div>
+      <div class="add-course__inputs-wrapper fw">
+          <div class="add-course__icon-wrapper">
+              <mat-icon class="add-course__icon">calendar_view_day</mat-icon>
+          </div>
+          <mat-form-field class="add-course__form-input">
+              <input matInput min="2000-01-02" type="date" placeholder="Дата вибіркого курсу №1" formControlName="date_of_course1">
+          </mat-form-field>
+          <mat-form-field class="add-course__form-input">
+              <input matInput min="2000-01-02" type="date" placeholder="Дата вибіркого курсу №2" formControlName="date_of_course2">
+          </mat-form-field>
+          <mat-form-field class="add-course__form-input">
+              <input matInput min="2000-01-02" type="date" placeholder="Дата вибіркого курсу №3" formControlName="date_of_course3">
+          </mat-form-field>
+          <mat-form-field class="add-course__form-input">
+              <input matInput min="2000-01-02" type="date" placeholder="Дата вибіркого курсу №4" formControlName="date_of_course4">
+          </mat-form-field>
+          <mat-form-field class="add-course__form-input">
+              <input matInput min="2000-01-02" type="date" placeholder="Дата вибіркого курсу №5" formControlName="date_of_course5">
+          </mat-form-field>
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="add-course__footer">
+      <button class="mat-raised-button"(click)="close()">Закрити</button>
+      <button type="submit" class="mat-raised-button mat-primary">Зберегти</button>
+    </mat-dialog-actions>
+    </form>
+</div>

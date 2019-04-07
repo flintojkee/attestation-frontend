@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { CalendarView, CalendarEventAction, CalendarEventTimesChangedEvent } from 'angular-calendar';
 import { CalendarEvent, DAYS_OF_WEEK } from 'calendar-utils';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Observable, Subscription, of } from 'rxjs';
 import {
   startOfDay,
   endOfDay,
@@ -56,7 +56,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [];
-
+  events$: Observable<Array<CalendarEvent>>;
   activeDayIsOpen = true;
   excludeDays: number[] = [0, 6];
 
@@ -69,6 +69,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.coursesSubscription = this.courses$.subscribe(data => {
       this.events.push(...this.getCourseEvents(data));
       this.events.push(...this.getSelectiveCourseEvents(data));
+      this.events$ = of(this.events);
     });
 
   }

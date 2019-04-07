@@ -193,4 +193,12 @@ export class HeadService {
     return this.http.get<Array<Course>>(this.coursesUrl + '/teachers');
   }
 
+  saveCourse(course: Course): Observable<any> {
+    return this.http.post<any>(this.coursesUrl, JSON.stringify(course), {headers: this.headers, observe: 'response'});
+  }
+
+  updateCourse(course: Course, id: number): Observable<any> {
+    return this.http.put<any>(this.coursesUrl + '/' + id, JSON.stringify(course), {headers: this.headers, observe: 'response'});
+  }
+
 }

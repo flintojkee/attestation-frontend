@@ -20,9 +20,8 @@
     </mat-form-field>
     <button (click)="filterTeachers()" mat-flat-button color="primary">Фільтрувати</button>
   </form>
-  <mat-spinner class="spinner" *ngIf="isLoaded"></mat-spinner>
-<mat-list  *ngIf="!isLoaded" class="teachers__list">
-  <mat-list-item class="teachers__teacher" *ngFor="let teacher of teachers$ | async">
+<mat-list  *ngIf="teachers$ | async; else loading; let teachers" class="teachers__list">
+  <mat-list-item class="teachers__teacher" *ngFor="let teacher of teachers">
     <img matListAvatar src="assets/images/teacher-photo.png">
     <div matLine>
       <a class="teachers__teacher-name" [routerLink]="[teacher.personnel_number]">{{teacher.name}} {{teacher.surname}}</a>
@@ -54,12 +53,9 @@
  </mat-list>
 </div>
 
-<ngx-spinner
-bdColor = "rgba(8,11,25,0.71)"
-size = "large"
-color = "#ffe400"
-type = "pacman"
-fullScreen = "true"
->
-<p style="color: white" >Завантаження... </p>
-</ngx-spinner>
+<ng-template #loading>
+  <div class="spinner" style="margin: 0 auto">
+    <mat-spinner></mat-spinner>
+    Завантаження...
+  </div>
+</ng-template>

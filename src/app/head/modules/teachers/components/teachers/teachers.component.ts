@@ -20,8 +20,7 @@ export class TeachersComponent implements OnInit {
   constructor(
     private headService: HeadService,
     public popup: MatDialog,
-    private formBuilder: FormBuilder,
-    private spinner: NgxSpinnerService
+    private formBuilder: FormBuilder
     ) { }
 
   teachers$: Observable<Array<Teacher>>;
@@ -32,16 +31,9 @@ export class TeachersComponent implements OnInit {
   subjectOptions$ = new Observable<Subject[]>();
 
   ngOnInit() {
-    this.spinner.show();
     this.teachers$ = this.headService.teachersValue;
     this.subjectOptions$ = this.headService.getAllSubjects();
-    this.isLoaded = false;
     this.createForm();
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 700);
-
   }
 
 
