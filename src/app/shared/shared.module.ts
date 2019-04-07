@@ -52,7 +52,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatExpansionModule,
     MatBadgeModule,
     MatTreeModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
 
   ],
   exports: [

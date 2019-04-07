@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { throwError, BehaviorSubject, Subject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { URL_CONFIG } from '@atestattion/config/config';
 import { User } from '@atestattion/shared/models/user';
-import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+
   }
 
 
@@ -29,10 +30,16 @@ export class AuthService {
             // tore user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
+            this.openSnackBar('Вітаємо в системі атестації вчителів', 'Ок', {
+              duration: 10000,
+              panelClass: 'success'
+            });
         }
 
         return user;
-    }));
+      }),
+      catchError(error => this.handleError(error))
+    );
   }
 
   logout() {
@@ -42,8 +49,17 @@ export class AuthService {
 }
 
   private handleError(error: Response): Observable<never> {
-    console.error(error);
+    if (error.status === 401) {
+      this.openSnackBar('Неправильний логін або пароль', 'Ок', {
+        duration: 10000,
+        panelClass: 'error'
+      });
+    }
     return throwError(error);
+  }
+
+  openSnackBar(message: string, action: string, settings: any) {
+    this.snackBar.open(message, action, settings);
   }
 
 }

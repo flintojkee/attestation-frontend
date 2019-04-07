@@ -4,17 +4,19 @@ import { URL_CONFIG } from '@atestattion/config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { Teacher, TeacherFilters, Category, Rank } from '../../shared/models/teacher';
-import { BehaviorSubject, of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
 import { Subject as Subj } from '@atestattion/shared/models/subject';
 import { ApplicationStatus } from '@atestattion/shared/models/application';
 import { Attestation } from '@atestattion/shared/models/attestation';
+import { MatSnackBar } from '@angular/material';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HeadService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {
     this.loadInitialData();
   }
   private teachers$: BehaviorSubject<Array<Teacher>> = new BehaviorSubject(Array());
@@ -29,6 +31,10 @@ export class HeadService {
   private applicationUrl = URL_CONFIG.applicationUrl;
   private attestationUrl = URL_CONFIG.attestationUrl;
   private headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
+
+  openSnackBar(message: string, action: string, settings: any) {
+    this.snackBar.open(message, action, settings);
+  }
 
   public get teachersValue() {
     return this.teachers;
@@ -78,7 +84,17 @@ export class HeadService {
     return this.http.post<Teacher>(this.teacherUrl, JSON.stringify(teacher), {headers: this.headers, observe: 'response'});
   }
   private deleteTeacher(id: number) {
-    return this.http.delete(`${this.teacherUrl}/${id}`, {headers: this.headers, observe: 'response'});
+    return this.http.delete(`${this.teacherUrl}/${id}`, {headers: this.headers, observe: 'response'}).pipe(
+      catchError(error => {
+        if (error.status === 400) {
+          this.openSnackBar('Не можна видалити вчителя, доки є його атестації', 'Ок', {
+            duration: 100000,
+            panelClass: 'error'
+          });
+        }
+        return throwError(error);
+      })
+    );
   }
   private updateTeacher(teacher: Teacher) {
     return this.http
@@ -160,6 +176,11 @@ export class HeadService {
 
   private createAttestation(attestation: Attestation) {
     return this.http.post(this.attestationUrl, JSON.stringify(attestation), {headers: this.headers, observe: 'response'});
+  }
+
+  getAttestations(year?: number): Observable<Array<Attestation>> {
+    const filter = year ? `?year=${year}` : '';
+    return this.http.get<Array<Attestation>>(this.attestationUrl + filter);
   }
 
 }

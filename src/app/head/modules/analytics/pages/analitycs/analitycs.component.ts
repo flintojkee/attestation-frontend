@@ -15,7 +15,7 @@ export class AnalitycsComponent implements OnInit {
   teachersAttestation: Observable<Array<Teacher>>;
   fileUrl: string;
   ngOnInit() {
-    this.fileUrl = 'https://attestation-backend.herokuapp.com/api/analytics/plan/download'
+    this.fileUrl = 'https://attestation-backend.herokuapp.com/api/analytics/plan/download';
     this.teachersAttestation = this.analyticsService.getTeachersCurrentYearAttestation();
   }
   downloadExcel() {
