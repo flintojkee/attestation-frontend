@@ -60,7 +60,7 @@ export class AddTeacherPopupComponent implements OnInit {
       surname: ['', Validators.required],
       next_attestation_date: [Validators.required],
       personnel_number: [ Validators.required],
-      position: ['', Validators.required],
+      position: ['вчитель', Validators.required],
       previous_attestation_date: [ Validators.required],
       qualification_category: ['', Validators.required],
       rank: [''],
