@@ -21,7 +21,7 @@ export class AddAttestationPopupComponent implements OnInit, OnDestroy {
   previousCategory = new FormControl('');
   categoryOptions = Object.keys(Category).map(key => ({ value: key, option: Category[key] }));
   rankOptions = Object.keys(Rank).map(key => ({ value: key, option: Rank[key] }));
-
+  today = new Date();
   yyyymmdd = this.getYYYYMMDD();
   constructor(
     private formBuilder: FormBuilder,
