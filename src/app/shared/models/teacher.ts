@@ -1,4 +1,5 @@
 import { Subject } from './subject';
+import { SelectiveCourse } from './course';
 
 export class Teacher {
   accreditation_level?: string;
@@ -20,6 +21,7 @@ export class Teacher {
   surname: string;
   avatar_url?: string;
   subjects?: Subject[];
+  selective_courses?: SelectiveCourse[]
 }
 
 export enum Category {

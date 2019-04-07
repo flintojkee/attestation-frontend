@@ -12,6 +12,7 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { SharedModule } from './shared';
+import { CoursesModule } from './head/modules/courses/courses.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -23,7 +24,8 @@ import { SharedModule } from './shared';
     BrowserAnimationsModule,
     FormsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    CoursesModule
   ],
   providers: [
     AppService,

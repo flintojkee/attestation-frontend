@@ -28,6 +28,7 @@ export class TeacherComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: { teacher: Teacher }) => {
         this.teacher = data.teacher;
+        console.log(this.teacher);
         this.departments = Array.from(new Set(this.teacher.subjects.map(sub => sub.department)));
         this.departmentsStr = this.departments.join(', ');
         this.subjects = this.teacher.subjects.map(subject => subject.subject_name).join(', ');

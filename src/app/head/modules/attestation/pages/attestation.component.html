@@ -1,10 +1,8 @@
 <div class="container">
-  <button mat-raised-button color="primary" (click)="openAddTeacherPopup()">
+  <button class="attestation__button-wrapper" mat-raised-button color="primary" (click)="openAddTeacherPopup()">
     Створити атестацію
   </button>
-  <br>
-  <h2>Вчителі, що проатестувались в поточному році</h2>
-  <br>
+  <h2 class="attestation__header">Вчителі, що проатестувались в <mat-form-field class="attestation__year-picker" ><input matInput [formControl]="yearFormControl" type="number" min="2000" [max]="currentYear" step="1" /></mat-form-field> році</h2>
   <table mat-table [dataSource]="attestations | async" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
@@ -47,7 +45,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-      <button (click)="deleteAttestation()" mat-icon-button color="warn">
+      <button (click)="deleteAttestation(element.attestation_number)" mat-icon-button color="warn">
         <mat-icon>delete</mat-icon>
       </button>
    </td>

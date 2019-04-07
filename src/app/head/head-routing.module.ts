@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: 'app/head/modules/applications/applications.module#ApplicationsModule',
       },
       {
+        path: 'courses',
+        loadChildren: 'app/head/modules/courses/courses.module#CoursesModule',
+      },
+      {
         path: 'analytics',
         loadChildren: 'app/head/modules/analytics/analytics.module#AnalyticsModule',
       }

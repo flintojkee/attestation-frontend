@@ -5,12 +5,21 @@
   <div class="teacher__content">
     <h3 class="teacher__name">{{teacher.surname}} {{teacher.name}} {{teacher.middle_name}}</h3>
     <div class="teacher__wrapper fw">
-  <div class="teacher__block teacher__block--info">
+  <div class="teacher__block teacher__block">
       <h4 class="teacher__block-header">Інформація</h4>
       <div class="teacher__block-content">
         <ul class="teacher__list">
           <li>Дата народження: {{teacher.birth_date}}</li>
           <li>Посада: {{teacher.position}}</li>
+          <li *ngIf="teacher.degree">Науковий ступінь: {{teacher.degree}}</li>
+          <li>Стаж: {{teacher.experience}} років</li>
+        </ul>
+      </div>
+    </div>
+    <div class="teacher__block teacher__block">
+      <h4 class="teacher__block-header">Предмети</h4>
+      <div class="teacher__block-content">
+        <ul class="teacher__list">
           <ng-container *ngIf="teacher.subjects.length">
               <ng-template [ngIf]="departments.length === 1" [ngIfElse]="subjectsArr">
                   <li>Кафедра: {{departmentsStr}}</li>
@@ -25,8 +34,6 @@
                   <li>Предмети: {{subjects}}</li>
                 </ng-template>
           </ng-container>
-          <li *ngIf="teacher.degree">Науковий ступінь: {{teacher.degree}}</li>
-          <li>Стаж: {{teacher.experience}} років</li>
         </ul>
       </div>
     </div>
@@ -49,6 +56,26 @@
             <li>Звання: {{teacher.rank}}</li>
             <li>Попередня атестація: {{teacher.previous_attestation_date}} рік</li>
             <li>Наступна атестація: {{teacher.next_attestation_date}} рік</li>
+          </ul>
+        </div>
+      </div>
+      <div *ngIf="teacher.referral_number" class="teacher__block">
+        <h4 class="teacher__block-header">Курси
+          <button  mat-icon-button color="primary">
+            <mat-icon>note_add</mat-icon>
+          </button>
+          <button  mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button  mat-icon-button color="accent">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </h4>
+        <div class="teacher__block-content">
+          <ul class="teacher__list">
+            <li ><strong>Початок фахового курсу: {{teacher.proff_course_start_date}}</strong></li>
+            <li ><strong>Кінець фахового курсу: {{teacher.proff_course_end_date}}</strong></li>
+            <li *ngFor="let selectiveCourse of teacher.selective_courses">Дата вибіркового курсу: {{selectiveCourse.date_of_course}}</li>
           </ul>
         </div>
       </div>

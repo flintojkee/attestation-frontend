@@ -1,26 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { AddAttestationPopupComponent } from '../components/add-attestation-popup/add-attestation-popup.component';
-import { AnalyticsService } from '../../analytics/shared/analytics.service';
 import { HeadService } from '@atestattion/head/shared/head.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Attestation } from '@atestattion/shared/models/attestation';
+import { FormControl, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-attestation',
   templateUrl: './attestation.component.html',
-  styleUrls: ['./attestation.component.scss']
+  styleUrls: ['./attestation.component.sass']
 })
-export class AttestationComponent implements OnInit {
+export class AttestationComponent implements OnInit, OnDestroy {
 
   constructor(
     public popup: MatDialog,
     private headService: HeadService
     ) { }
   attestations: Observable<Array<Attestation>>;
+  deleteAttestation$: Subscription;
   displayedColumns: string[] = ['surname', 'name', 'date', 'category_conclusion', 'rank_conclusion', 'delete'];
+  currentYear = new Date().getFullYear();
+  yearFormControl = new FormControl(this.currentYear);
   ngOnInit() {
     this.attestations = this.headService.getAttestations();
+    this.yearFormControl.valueChanges.pipe(
+      debounceTime(400),
+      distinctUntilChanged()
+    ).subscribe( res => {
+      this.attestations = this.headService.getAttestations(res);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.deleteAttestation$) {
+      this.deleteAttestation$.unsubscribe();
+    }
   }
 
   openAddTeacherPopup(): void {
@@ -31,8 +47,13 @@ export class AttestationComponent implements OnInit {
     this.popup.open(AddAttestationPopupComponent, popupConfig);
   }
 
-  deleteAttestation() {
+  deleteAttestation(id: number) {
     if (confirm('Ви впевнені, що бажаєте видалити атестацію?')) {
+      this.deleteAttestation$ = this.headService.deleteAttestation(id).subscribe(res => {
+        if (res.message === 'successfully deleted attestation' ) {
+          this.attestations = this.headService.getAttestations();
+        }
+      });
     }
   }
 }

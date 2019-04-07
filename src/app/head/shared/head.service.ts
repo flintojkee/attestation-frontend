@@ -10,6 +10,7 @@ import { ApplicationStatus } from '@atestattion/shared/models/application';
 import { Attestation } from '@atestattion/shared/models/attestation';
 import { MatSnackBar } from '@angular/material';
 import { catchError } from 'rxjs/operators';
+import { Course } from '@atestattion/shared/models/course';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,7 @@ export class HeadService {
   private teachersUrl = URL_CONFIG.teachersUrl;
   private applicationUrl = URL_CONFIG.applicationUrl;
   private attestationUrl = URL_CONFIG.attestationUrl;
+  private coursesUrl = URL_CONFIG.coursesUrl;
   private headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
 
   openSnackBar(message: string, action: string, settings: any) {
@@ -181,6 +183,14 @@ export class HeadService {
   getAttestations(year?: number): Observable<Array<Attestation>> {
     const filter = year ? `?year=${year}` : '';
     return this.http.get<Array<Attestation>>(this.attestationUrl + filter);
+  }
+
+  deleteAttestation(id: number) {
+    return this.http.delete<any>(this.attestationUrl + '/' + id);
+  }
+
+  getCourses(): Observable<Array<Course>> {
+    return this.http.get<Array<Course>>(this.coursesUrl + '/teachers');
   }
 
 }

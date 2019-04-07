@@ -21,6 +21,8 @@ export class AddAttestationPopupComponent implements OnInit, OnDestroy {
   previousCategory = new FormControl('');
   categoryOptions = Object.keys(Category).map(key => ({ value: key, option: Category[key] }));
   rankOptions = Object.keys(Rank).map(key => ({ value: key, option: Rank[key] }));
+
+  yyyymmdd = this.getYYYYMMDD();
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddAttestationPopupComponent>,
@@ -90,5 +92,12 @@ export class AddAttestationPopupComponent implements OnInit, OnDestroy {
 
   close(): void {
     this.dialogRef.close();
+  }
+
+  getYYYYMMDD(): string {
+    const today = new Date();
+    const currentMonth = (today.getMonth() + 1) < 10 ? '0' + (today.getMonth() + 1) : (today.getMonth() + 1);
+    const currentDay = today.getDate() < 10 ? '0' + today.getDate() : today.getDate();
+    return today.getFullYear() + '-' + currentMonth + '-' + currentDay;
   }
 }
