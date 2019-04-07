@@ -23,8 +23,8 @@ export class Teacher {
   subjects?: Subject[];
   selective_courses?: SelectiveCourse[];
   referral_number?: number;
-  proff_course_start_date: number;
-  proff_course_end_date: number;
+  proff_course_start_date?: number;
+  proff_course_end_date?: number;
 }
 
 export enum Category {
