@@ -21,7 +21,10 @@ export class Teacher {
   surname: string;
   avatar_url?: string;
   subjects?: Subject[];
-  selective_courses?: SelectiveCourse[]
+  selective_courses?: SelectiveCourse[];
+  referral_number?: number;
+  proff_course_start_date: number;
+  proff_course_end_date: number;
 }
 
 export enum Category {
