@@ -48,25 +48,25 @@ export class AddTeacherPopupComponent implements OnInit {
 
   initForm() {
     this.teacherForm = this.formBuilder.group({
-      accreditation_level: [4, Validators.required],
+      accreditation_level: [, Validators.required],
       birth_date: ['', Validators.required],
-      degree: [2],
-      educational_institution: ['Naukma', Validators.required],
-      employment_history: [101, Validators.required],
-      experience: [5, Validators.required],
-      graduation_year: [1999, Validators.required],
-      middle_name: ['Tarasovych', Validators.required],
-      name: ['Denys', Validators.required],
-      surname: ['Vasylenko', Validators.required],
-      next_attestation_date: [2020, Validators.required],
-      personnel_number: [101, Validators.required],
-      position: ['ukr', Validators.required],
-      previous_attestation_date: [2015, Validators.required],
-      qualification_category: ['SPEC_1', Validators.required],
-      rank: ['RANK1'],
-      specialty: ['kek', Validators.required],
+      degree: [],
+      educational_institution: ['', Validators.required],
+      employment_history: [ Validators.required],
+      experience: [ Validators.required],
+      graduation_year: [ Validators.required],
+      middle_name: ['', Validators.required],
+      name: ['', Validators.required],
+      surname: ['', Validators.required],
+      next_attestation_date: [Validators.required],
+      personnel_number: [ Validators.required],
+      position: ['', Validators.required],
+      previous_attestation_date: [ Validators.required],
+      qualification_category: ['', Validators.required],
+      rank: [''],
+      specialty: ['', Validators.required],
       subjects: [''],
-      avatar_url: ['https://school173.com.ua/assets/img/department/teachers/vasilenko.jpg']
+      avatar_url: ['']
   });
   }
   get f() { return this.teacherForm.controls; }
